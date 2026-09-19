@@ -1,0 +1,44 @@
+# ROS 2 / colcon generated workspaces
+**/build/
+**/build_*/
+**/install/
+**/install_*/
+**/log/
+**/log_*/
+run_logs/
+
+# ROS bags and runtime data
+rosbag2_*/
+*.bag
+*.db3
+*.mcap
+.ros/
+
+# Python caches and test output
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# CMake generated files outside colcon directories
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Gazebo user caches
+.gazebo/
+.gz/
