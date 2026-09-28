@@ -75,17 +75,18 @@ controller_server:
       min_approach_linear_velocity: 0.05
       approach_velocity_scaling_dist: 0.4
       use_collision_detection: true
-      max_allowed_time_to_collision_up_to_carrot: 2.0
+      max_allowed_time_to_collision_up_to_carrot: 1.0 # the default is 1.0
       use_regulated_linear_velocity_scaling: true
       use_cost_regulated_linear_velocity_scaling: true
       # Must agree with the local inflation layer below.
-      cost_scaling_dist: 0.25
+      cost_scaling_dist: 0.18 # Originally was 0.25
       cost_scaling_gain: 0.5
       inflation_cost_scaling_factor: 10.0
       regulated_linear_scaling_min_radius: 0.9
       regulated_linear_scaling_min_speed: 0.12
       allow_reversing: false
-      use_rotate_to_heading: true
+      # This was the main reason I found out about the fake odom angular z
+      use_rotate_to_heading: false # putting this to true makes the robot only yaw, 
       rotate_to_heading_min_angle: 0.35
       max_angular_accel: 0.8
       stateful: true
@@ -109,8 +110,8 @@ local_costmap:
 
       # Chassis is 0.30 x 0.25 m, but the wheels extend to +/-0.154 m in Y.
       # This polygon includes the wheels plus roughly 1 cm safety clearance.
-      footprint: "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
-
+      footprint: "[[-0.15, -0.154], [0.15, -0.154], [0.15, 0.154], [-0.15, 0.154]]" # "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
+      footprint_padding: 0.0
       plugins: ["obstacle_layer", "inflation_layer"]
 
       obstacle_layer:
@@ -134,9 +135,7 @@ local_costmap:
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
         enabled: true
-        # Keep this aligned with the global layer. The padded footprint has a
-        # circumscribed radius of about 0.23 m, leaving a graded safety band.
-        inflation_radius: 0.30
+        inflation_radius: 0.22 # 0.3
         cost_scaling_factor: 10.0
 
       always_send_full_costmap: true
@@ -154,7 +153,8 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       resolution: 0.05
-      footprint: "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
+      footprint: "[[-0.15, -0.154], [0.15, -0.154], [0.15, 0.154], [-0.15, 0.154]]" # "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
+      footprint_padding: 0.0
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       static_layer:
@@ -186,7 +186,7 @@ global_costmap:
         enabled: true
         # The robot's circumscribed radius is about 0.195 m. A wider decay
         # band gives NavFn a smooth preference for the centre of each aisle.
-        inflation_radius: 0.30
+        inflation_radius: 0.25 # 0.30
         cost_scaling_factor: 10.0
       always_send_full_costmap: true
 

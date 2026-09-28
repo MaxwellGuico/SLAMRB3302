@@ -104,7 +104,7 @@ def generate_launch_description():
                 'odom0_config': [
                     False, False, False,
                     False, False, False,
-                    True, False, False,
+                    True, False, False, 
                     False, False, False,
                     False, False, False,
                 ],
@@ -116,14 +116,14 @@ def generate_launch_description():
                 'imu0': imu_topic,
                 'imu0_config': [
                     False, False, False,
-                    False, False, True,
+                    False, False, False, # absolute yaw disabled
                     False, False, False,
                     False, False, True,
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,
                 'imu0_differential': False,
-                'imu0_relative': True,
+                'imu0_relative': False, # if you want to use the orientation exactly as published by the IMU.
                 'imu0_remove_gravitational_acceleration': False,
                 'imu0_pose_rejection_threshold': 5.0,
                 'imu0_twist_rejection_threshold': 5.0,

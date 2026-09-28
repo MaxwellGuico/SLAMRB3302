@@ -225,6 +225,11 @@ class WaveRoverDriver(Node):
         self.display_flash_on = True
         self.display_update_count = 0
 
+        # Added this
+        self.prev_yaw_odom = None
+        self.odom_angular_z = 0.0
+        self.prev_odom_angular_z_time = None
+
         self.display_service = DisplayServiceGuard("waverover-init.service", self.get_logger())
         self.display_service.stop()
         atexit.register(self.display_service.start)
@@ -334,6 +339,22 @@ class WaveRoverDriver(Node):
                 self.enc_B = int(data.get("encB", self.enc_B))
                 self.voltage = float(data.get("voltage", self.voltage))
                 self.battery_percentage = self._estimate_battery_percentage(self.voltage)
+                # Calculate odom_angular_z
+                now = self.get_clock().now()
+                if self.prev_yaw_odom  is not None and self.prev_odom_angular_z_time != None:
+                    dt = (now - self.prev_odom_angular_z_time).nanoseconds / 1e9
+                    yaw_change = self.yaw_odom - self.prev_yaw_odom
+                    if dt > 1e-6:
+                        self.odom_angular_z = yaw_change/dt
+                    else:
+                        self.odom_angular_z = 0.0
+                else:
+                    self.odom_angular_z = 0.0
+
+    
+                self.prev_yaw_odom = self.yaw_odom
+                self.prev_odom_angular_z_time = now
+
             elif t_code == 1002:
                 self.yaw_imu = float(data.get("yaw_imu", self.yaw_imu))
                 self.imu_roll = float(data.get("r", self.imu_roll))
@@ -381,9 +402,15 @@ class WaveRoverDriver(Node):
 
     def _publish_odom(self):
         now = self.get_clock().now()
-        with self.feedback_lock:
+        with self.feedback_lock: # This ensures that its in the same feedback frame
             dist_centre = float(self.dist_centre)
-            yaw = self._yaw_radians(float(self.yaw_odom))
+            # yaw = self._yaw_radians(float(self.yaw_odom)) 
+            yaw = float(self.yaw_odom) # Added this
+            # woah this an interesting bug, 
+            # i read the json_feedback and once i rotated it more than 2pi, it doesnt wrap, it just kept increasing
+            # Using _yaw_radians converts the values that is larger than 2pi is in degrees and converts in into radians
+            odom_angular_z = float(self.odom_angular_z) # added this
+
 
         if self.prev_dist_centre is None:
             delta_dist = 0.0
@@ -412,7 +439,8 @@ class WaveRoverDriver(Node):
         odom_msg.pose.pose.orientation.z = orientation_z
         odom_msg.pose.pose.orientation.w = orientation_w
         odom_msg.twist.twist.linear.x = linear_velocity
-        odom_msg.twist.twist.angular.z = float(self.current_angular)
+        # odom_msg.twist.twist.angular.z = float(self.current_angular)
+        odom_msg.twist.twist.angular.z = odom_angular_z # Added this
         self.odom_pub.publish(odom_msg)
 
         if self.publish_odom_tf:
