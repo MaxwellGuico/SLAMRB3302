@@ -1,0 +1,29 @@
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/__pycache__/planning.launch.cpython-312.pyc
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch.py
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch_original.py
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params.yaml
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params_original.yaml
+-- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/initial_pose_nav_starter.py
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/package_run_dependencies/planning_rpp
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/parent_prefix_path/planning_rpp
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.sh
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.dsv
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.sh
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.dsv
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.bash
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.sh
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.zsh
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.dsv
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.dsv
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/packages/planning_rpp
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig.cmake
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig-version.cmake
+-- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.xml

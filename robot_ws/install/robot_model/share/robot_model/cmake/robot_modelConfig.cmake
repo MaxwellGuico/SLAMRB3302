@@ -1,0 +1,1 @@
+/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model/ament_cmake_core/robot_modelConfig.cmake

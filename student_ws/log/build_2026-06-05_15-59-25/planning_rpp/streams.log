@@ -1,0 +1,29 @@
+[0.410s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.481s] gmake: Warning: File 'Makefile' has modification time 7509262 s in the future
+[0.542s] gmake[1]: Warning: File 'CMakeFiles/Makefile2' has modification time 7509262 s in the future
+[0.543s] gmake[1]: warning:  Clock skew detected.  Your build may be incomplete.
+[0.573s] gmake: warning:  Clock skew detected.  Your build may be incomplete.
+[0.580s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.583s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp
+[0.621s] -- Install configuration: ""
+[0.621s] -- Execute custom install script
+[0.622s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/__pycache__/planning.launch.cpython-312.pyc
+[0.623s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch.py
+[0.623s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params.yaml
+[0.624s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz
+[0.624s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/package_run_dependencies/planning_rpp
+[0.625s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/parent_prefix_path/planning_rpp
+[0.625s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.sh
+[0.626s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.dsv
+[0.627s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.sh
+[0.629s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.dsv
+[0.629s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.bash
+[0.630s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.sh
+[0.631s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.zsh
+[0.632s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.dsv
+[0.632s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.dsv
+[0.663s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/packages/planning_rpp
+[0.669s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig.cmake
+[0.671s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig-version.cmake
+[0.671s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.xml
+[0.716s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp

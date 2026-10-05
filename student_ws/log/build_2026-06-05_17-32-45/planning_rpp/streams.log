@@ -1,0 +1,28 @@
+[0.412s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.526s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.530s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp
+[0.563s] -- Install configuration: ""
+[0.564s] -- Execute custom install script
+[0.564s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/__pycache__/planning.launch.cpython-312.pyc
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch.py
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch_original.py
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params.yaml
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params_original.yaml
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz
+[0.565s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/lib/planning_rpp/initial_pose_nav_starter.py
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/package_run_dependencies/planning_rpp
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/parent_prefix_path/planning_rpp
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.sh
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.dsv
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.sh
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/path.dsv
+[0.567s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.bash
+[0.567s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.sh
+[0.567s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.zsh
+[0.567s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/local_setup.dsv
+[0.568s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.dsv
+[0.604s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/packages/planning_rpp
+[0.604s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig.cmake
+[0.605s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/cmake/planning_rppConfig-version.cmake
+[0.605s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/package.xml
+[0.622s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp

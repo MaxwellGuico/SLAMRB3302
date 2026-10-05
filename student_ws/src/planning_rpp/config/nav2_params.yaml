@@ -1,0 +1,256 @@
+amcl:
+  ros__parameters:
+    use_sim_time: false
+
+    base_frame_id: base_link
+    odom_frame_id: odom
+    global_frame_id: map
+    scan_topic: scan
+
+    robot_model_type: nav2_amcl::DifferentialMotionModel
+
+    # Gazebo odometry is relatively clean.
+    # In real life should use 0.2
+    alpha1: 0.10
+    alpha2: 0.10
+    alpha3: 0.10
+    alpha4: 0.10
+    alpha5: 0.10
+
+    # Update more frequently in the small 0.60 m cells.
+    update_min_d: 0.05
+    update_min_a: 0.05
+    resample_interval: 1
+
+    min_particles: 300
+    max_particles: 1000
+    max_beams: 120
+
+    laser_model_type: likelihood_field
+    laser_likelihood_max_dist: 0.50
+    laser_min_range: -1.0
+    laser_max_range: -1.0
+    sigma_hit: 0.10
+    z_hit: 0.80
+    z_rand: 0.20
+
+    do_beamskip: false
+    tf_broadcast: true
+    transform_tolerance: 0.5
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigate_to_pose:
+      plugin: nav2_bt_navigator::NavigateToPoseNavigator
+    navigate_through_poses:
+      plugin: nav2_bt_navigator::NavigateThroughPosesNavigator
+
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 20.0
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["goal_checker"]
+    controller_plugins: ["FollowPath"]
+    progress_checker:
+      plugin: nav2_controller::SimpleProgressChecker
+      required_movement_radius: 0.05
+      movement_time_allowance: 20.0
+    goal_checker:
+      plugin: nav2_controller::SimpleGoalChecker
+    FollowPath:
+      plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+      # Conservative values for the 0.60 m grid and tight right-angle turns.
+      desired_linear_vel: 0.15
+      lookahead_dist: 0.25
+      min_lookahead_dist: 0.18
+      max_lookahead_dist: 0.35
+      lookahead_time: 1.5
+      rotate_to_heading_angular_vel: 0.5
+      transform_tolerance: 0.1
+      use_velocity_scaled_lookahead_dist: true
+      min_approach_linear_velocity: 0.05
+      approach_velocity_scaling_dist: 0.4
+      use_collision_detection: true
+      max_allowed_time_to_collision_up_to_carrot: 1.0 # the default is 1.0
+      use_regulated_linear_velocity_scaling: true
+      use_cost_regulated_linear_velocity_scaling: true
+      # Must agree with the local inflation layer below.
+      cost_scaling_dist: 0.18 # Originally was 0.25
+      cost_scaling_gain: 0.5
+      inflation_cost_scaling_factor: 10.0
+      regulated_linear_scaling_min_radius: 0.9
+      regulated_linear_scaling_min_speed: 0.12
+      allow_reversing: false
+      # This was the main reason I found out about the fake odom angular z
+      use_rotate_to_heading: false # putting this to true makes the robot only yaw, 
+      rotate_to_heading_min_angle: 0.35
+      max_angular_accel: 0.8
+      stateful: true
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 10.0
+      publish_frequency: 5.0
+      transform_tolerance: 0.3
+
+      use_sim_time: false
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 3
+      height: 3
+      # Match the ideal map resolution so narrow wall clearances are not
+      # quantized into coarse 5 cm cells.
+      resolution: 0.02
+
+      # Chassis is 0.30 x 0.25 m, but the wheels extend to +/-0.154 m in Y.
+      # This polygon includes the wheels plus roughly 1 cm safety clearance.
+      footprint: "[[-0.15, -0.154], [0.15, -0.154], [0.15, 0.154], [-0.15, 0.154]]" # "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
+      footprint_padding: 0.0
+      plugins: ["obstacle_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: nav2_costmap_2d::ObstacleLayer
+        enabled: true
+        footprint_clearing_enabled: true
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          clearing: true
+          marking: true
+          min_obstacle_height: 0.0
+          max_obstacle_height: 0.5
+          obstacle_min_range: 0.05
+          obstacle_max_range: 2.5
+          raytrace_min_range: 0.0
+          raytrace_max_range: 3.0
+          inf_is_valid: true
+
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        enabled: true
+        inflation_radius: 0.22 # 0.3
+        cost_scaling_factor: 10.0
+
+      always_send_full_costmap: true
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      transform_tolerance: 0.3
+
+
+      global_frame: map
+      robot_base_frame: base_link
+      resolution: 0.05
+      footprint: "[[-0.15, -0.154], [0.15, -0.154], [0.15, 0.154], [-0.15, 0.154]]" # "[[-0.16, -0.165], [0.16, -0.165], [0.16, 0.165], [-0.16, 0.165]]"
+      footprint_padding: 0.0
+      track_unknown_space: true
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+        map_subscribe_transient_local: true
+        subscribe_to_updates: true
+      obstacle_layer:
+        plugin: nav2_costmap_2d::ObstacleLayer
+        enabled: true
+        footprint_clearing_enabled: true
+        # Preserve static-map obstacles while adding obstacles seen by LiDAR.
+        combination_method: 1
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          clearing: true
+          marking: true
+          min_obstacle_height: 0.0
+          max_obstacle_height: 0.5
+          obstacle_min_range: 0.05
+          obstacle_max_range: 2.5
+          raytrace_min_range: 0.0
+          raytrace_max_range: 3.0
+          inf_is_valid: true
+
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        enabled: true
+        # The robot's circumscribed radius is about 0.195 m. A wider decay
+        # band gives NavFn a smooth preference for the centre of each aisle.
+        inflation_radius: 0.25 # 0.30
+        cost_scaling_factor: 10.0
+      always_send_full_costmap: true
+
+map_server:
+  ros__parameters:
+    use_sim_time: false
+    yaml_filename: ""
+
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: nav2_navfn_planner::NavfnPlanner
+      use_astar: true
+
+smoother_server:
+  ros__parameters:
+    use_sim_time: false
+    smoother_plugins: ["simple_smoother"]
+    simple_smoother:
+      plugin: nav2_smoother::SimpleSmoother
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: false
+    local_costmap_topic: local_costmap/costmap_raw
+    global_costmap_topic: global_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_footprint_topic: global_costmap/published_footprint
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait"]
+    spin:
+      plugin: nav2_behaviors::Spin
+    backup:
+      plugin: nav2_behaviors::BackUp
+    drive_on_heading:
+      plugin: nav2_behaviors::DriveOnHeading
+    wait:
+      plugin: nav2_behaviors::Wait
+    local_frame: odom
+    global_frame: map
+    robot_base_frame: base_link
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: false
+    smoothing_frequency: 20.0
+    feedback: OPEN_LOOP
+    max_velocity: [0.5, 0.0, 1.0]
+    min_velocity: [-0.5, 0.0, -1.0]
+    max_accel: [0.5, 0.0, 0.5]
+    max_decel: [-0.5, 0.0, -0.5]
+    odom_topic: /odom
+    enable_stamped_cmd_vel: false
+
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: false
+    loop_rate: 20
+    stop_on_failure: false
+    waypoint_task_executor_plugin: wait_at_waypoint
+    wait_at_waypoint:
+      plugin: nav2_waypoint_follower::WaitAtWaypoint
+      enabled: true
+      waypoint_pause_duration: 3000

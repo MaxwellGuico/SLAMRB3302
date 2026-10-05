@@ -1,0 +1,25 @@
+[0.028s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.101s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.500s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.718s] -- Configuring done (0.6s)
+[0.731s] -- Generating done (0.0s)
+[0.740s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp
+[0.794s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp -- -j8 -l8
+[0.813s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp
+[0.832s] -- Install configuration: ""
+[0.833s] -- Execute custom install script
+[0.838s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/__pycache__/planning.launch.cpython-312.pyc
+[0.839s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch.py
+[0.840s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/launch/planning.launch_original.py
+[0.840s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params.yaml
+[0.845s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params_original.yaml
+[0.845s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz
+[0.845s] [31mCMake Error at ament_cmake_symlink_install/ament_cmake_symlink_install.cmake:105 (message):
+[0.847s]   ament_cmake_symlink_install_directory() can't find
+[0.848s]   '/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp/PROGRAMS'
+[0.848s] Call Stack (most recent call first):
+[0.848s]   ament_cmake_symlink_install/ament_cmake_symlink_install.cmake:319 (ament_cmake_symlink_install_directory)
+[0.850s]   cmake_install.cmake:46 (include)
+[0.851s] 
+[0.851s] [0m
+[0.852s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp

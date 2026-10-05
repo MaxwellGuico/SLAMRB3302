@@ -1,0 +1,32 @@
+1780679061.3591385 [INFO] [launch]: All log files can be found below /home/ubuntu/rb3302_final_proj_code/run_logs/2026-06-05-17-04-21-357698-ubuntu-97091
+1780679061.3593805 [INFO] [launch]: Default logging verbosity is set to INFO
+1780679061.5908785 [INFO] [ekf_node-1]: process started with pid [97097]
+1780679061.5912056 [INFO] [map_server-2]: process started with pid [97098]
+1780679061.5945570 [INFO] [amcl-3]: process started with pid [97099]
+1780679061.5948567 [INFO] [lifecycle_manager-4]: process started with pid [97100]
+1780679061.5951364 [INFO] [planner_server-5]: process started with pid [97101]
+1780679061.5953023 [INFO] [controller_server-6]: process started with pid [97102]
+1780679061.5956492 [INFO] [velocity_smoother-7]: process started with pid [97103]
+1780679061.5959461 [INFO] [smoother_server-8]: process started with pid [97104]
+1780679061.5961640 [INFO] [behavior_server-9]: process started with pid [97105]
+1780679061.5963941 [INFO] [bt_navigator-10]: process started with pid [97106]
+1780679061.5973852 [INFO] [waypoint_follower-11]: process started with pid [97107]
+1780679061.5978124 [INFO] [lifecycle_manager-12]: process started with pid [97108]
+1780679061.5988152 [INFO] [rviz2-13]: process started with pid [97111]
+1780679062.1489251 [ERROR] [rviz2-13]: process has died [pid 97111, exit code -6, cmd '/opt/ros/jazzy/lib/rviz2/rviz2 -d /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz --ros-args -r __node:=rviz2 --params-file /tmp/launch_params_jj_bxyp0'].
+1780679095.0680492 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1780679095.2666113 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT) again, ignoring...
+1780679095.2836773 [ERROR] [lifecycle_manager-4]: process has died [pid 97100, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_lifecycle_manager/lifecycle_manager --ros-args -r __node:=lifecycle_manager_localization --params-file /tmp/launch_params_peyq4096'].
+1780679095.2850404 [ERROR] [amcl-3]: process has died [pid 97099, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_amcl/amcl --ros-args -r __node:=amcl --params-file /tmp/launch_params_ipp7sczz --params-file /tmp/launch_params_x_ihddvz -r scan:=/scan'].
+1780679095.2965426 [ERROR] [velocity_smoother-7]: process has died [pid 97103, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_velocity_smoother/velocity_smoother --ros-args -r __node:=velocity_smoother --params-file /tmp/launch_params_ipp7sczz -r cmd_vel:=cmd_vel_nav_raw -r cmd_vel_smoothed:=/cmd_vel'].
+1780679095.2974234 [ERROR] [map_server-2]: process has died [pid 97098, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_map_server/map_server --ros-args -r __node:=map_server --params-file /tmp/launch_params_ipp7sczz --params-file /tmp/launch_params_59mrghex'].
+1780679095.2995920 [ERROR] [ekf_node-1]: process has died [pid 97097, exit code -2, cmd '/opt/ros/jazzy/lib/robot_localization/ekf_node --ros-args -r __node:=ekf_filter_node --params-file /tmp/launch_params_jyptm6ff -r odometry/filtered:=/odom'].
+1780679095.4076650 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT) again, ignoring...
+1780679095.4154892 [ERROR] [smoother_server-8]: process has died [pid 97104, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_smoother/smoother_server --ros-args -r __node:=smoother_server --params-file /tmp/launch_params_ipp7sczz'].
+1780679095.4168231 [ERROR] [lifecycle_manager-12]: process has died [pid 97108, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_lifecycle_manager/lifecycle_manager --ros-args -r __node:=lifecycle_manager_navigation --params-file /tmp/launch_params_nj9waoyc'].
+1780679095.4188302 [ERROR] [behavior_server-9]: process has died [pid 97105, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_behaviors/behavior_server --ros-args -r __node:=behavior_server --params-file /tmp/launch_params_ipp7sczz -r cmd_vel:=/cmd_vel'].
+1780679095.4250264 [ERROR] [waypoint_follower-11]: process has died [pid 97107, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_waypoint_follower/waypoint_follower --ros-args -r __node:=waypoint_follower --params-file /tmp/launch_params_ipp7sczz'].
+1780679095.5662425 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT) again, ignoring...
+1780679095.5708368 [ERROR] [controller_server-6]: process has died [pid 97102, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_controller/controller_server --ros-args -r __node:=controller_server --params-file /tmp/launch_params_ipp7sczz -r cmd_vel:=cmd_vel_nav_raw -r odom:=/odom'].
+1780679095.5819383 [ERROR] [planner_server-5]: process has died [pid 97101, exit code -2, cmd '/opt/ros/jazzy/lib/nav2_planner/planner_server --ros-args -r __node:=planner_server --params-file /tmp/launch_params_ipp7sczz'].
+1780679095.7658248 [INFO] [bt_navigator-10]: process has finished cleanly [pid 97106]

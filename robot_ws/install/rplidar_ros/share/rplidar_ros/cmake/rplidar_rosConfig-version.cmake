@@ -1,0 +1,1 @@
+/home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros/ament_cmake_core/rplidar_rosConfig-version.cmake

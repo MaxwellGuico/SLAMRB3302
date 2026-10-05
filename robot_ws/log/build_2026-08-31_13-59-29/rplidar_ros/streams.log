@@ -1,0 +1,31 @@
+[0.046s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros -- -j8 -l8
+[0.169s] [ 47%] Built target rplidar_node
+[0.180s] [ 52%] Built target rplidar_client
+[0.259s] [100%] Built target rplidar_composition
+[0.518s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros -- -j8 -l8
+[0.519s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros
+[0.561s] -- Install configuration: ""
+[0.565s] -- Execute custom install script
+[0.566s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/launch/rplidar_launch.py
+[0.569s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/rviz/rplidar_ros.rviz
+[0.569s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/lib/rplidar_ros/rplidar_node
+[0.570s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/lib/rplidar_ros/rplidar_composition
+[0.570s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/lib/rplidar_ros/rplidar_client
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/ament_index/resource_index/package_run_dependencies/rplidar_ros
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/ament_index/resource_index/parent_prefix_path/rplidar_ros
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/environment/ament_prefix_path.sh
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/environment/ament_prefix_path.dsv
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/environment/path.sh
+[0.571s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/environment/path.dsv
+[0.572s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/local_setup.bash
+[0.577s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/local_setup.sh
+[0.578s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/local_setup.zsh
+[0.578s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/local_setup.dsv
+[0.578s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/package.dsv
+[0.617s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/ament_index/resource_index/packages/rplidar_ros
+[0.620s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.621s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.622s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/cmake/rplidar_rosConfig.cmake
+[0.626s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/cmake/rplidar_rosConfig-version.cmake
+[0.627s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros/share/rplidar_ros/package.xml
+[0.665s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/rplidar_ros

@@ -1,0 +1,32 @@
+[0.058s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial -- -j8 -l8
+[0.187s] [100%] Built target serial
+[0.552s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial -- -j8 -l8
+[0.553s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial
+[0.567s] -- Install configuration: ""
+[0.567s] -- Execute custom install script
+[0.568s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/lib/libserial.a
+[0.569s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/library_path.sh
+[0.569s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/library_path.dsv
+[0.573s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/include/serial/impl/unix.h
+[0.574s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/include/serial/impl/win.h
+[0.574s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/include/serial/serial.h
+[0.575s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/include/serial/v8stdint.h
+[0.576s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/ament_index/resource_index/package_run_dependencies/serial
+[0.576s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/ament_index/resource_index/parent_prefix_path/serial
+[0.577s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/ament_prefix_path.sh
+[0.578s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/ament_prefix_path.dsv
+[0.578s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/path.sh
+[0.579s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/environment/path.dsv
+[0.579s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/local_setup.bash
+[0.580s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/local_setup.sh
+[0.580s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/local_setup.zsh
+[0.581s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/local_setup.dsv
+[0.582s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/package.dsv
+[0.596s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/ament_index/resource_index/packages/serial
+[0.598s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.599s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/cmake/ament_cmake_export_libraries-extras.cmake
+[0.600s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.601s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/cmake/serialConfig.cmake
+[0.601s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/cmake/serialConfig-version.cmake
+[0.601s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial/share/serial/package.xml
+[0.607s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/serial

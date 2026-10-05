@@ -1,0 +1,30 @@
+[3.662s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer': PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/build --no-deps symlink_data
+[4.356s] running develop
+[4.819s] running egg_info
+[4.820s] creating mapping_cartographer.egg-info
+[4.855s] writing mapping_cartographer.egg-info/PKG-INFO
+[4.857s] writing dependency_links to mapping_cartographer.egg-info/dependency_links.txt
+[4.857s] writing entry points to mapping_cartographer.egg-info/entry_points.txt
+[4.857s] writing requirements to mapping_cartographer.egg-info/requires.txt
+[4.857s] writing top-level names to mapping_cartographer.egg-info/top_level.txt
+[4.857s] writing manifest file 'mapping_cartographer.egg-info/SOURCES.txt'
+[4.932s] reading manifest file 'mapping_cartographer.egg-info/SOURCES.txt'
+[4.933s] writing manifest file 'mapping_cartographer.egg-info/SOURCES.txt'
+[4.974s] running build_ext
+[4.974s] Creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/lib/python3.12/site-packages/mapping-cartographer.egg-link (link to .)
+[4.977s] Installing scan_time_normalizer script to /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/lib/mapping_cartographer
+[4.977s] 
+[4.977s] Installed /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer
+[4.977s] running symlink_data
+[4.978s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/ament_index
+[4.978s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/ament_index/resource_index
+[4.980s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/ament_index/resource_index/packages
+[4.981s] symbolically linking /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/resource/mapping_cartographer -> /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/ament_index/resource_index/packages
+[4.982s] symbolically linking /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/package.xml -> /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer
+[4.983s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/launch
+[4.983s] symbolically linking /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/launch/mapping.launch.py -> /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/launch
+[4.984s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/config
+[4.985s] symbolically linking /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/config/cartographer.lua -> /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/config
+[4.986s] creating /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/rviz
+[4.986s] symbolically linking /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/rviz/mapping.rviz -> /home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/share/mapping_cartographer/rviz
+[5.096s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer' returned '0': PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/rb3302_final_proj_code/install/mapping_cartographer/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/build --no-deps symlink_data

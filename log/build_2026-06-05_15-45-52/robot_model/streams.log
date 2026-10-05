@@ -1,0 +1,49 @@
+[0.067s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/robot_model -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/install/robot_model
+[0.921s] -- The C compiler identification is GNU 13.3.0
+[0.922s] -- The CXX compiler identification is GNU 13.3.0
+[0.922s] -- Detecting C compiler ABI info
+[0.925s] -- Detecting C compiler ABI info - done
+[0.926s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.930s] -- Detecting C compile features
+[0.930s] -- Detecting C compile features - done
+[0.932s] -- Detecting CXX compiler ABI info
+[1.420s] -- Detecting CXX compiler ABI info - done
+[1.434s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.435s] -- Detecting CXX compile features
+[1.435s] -- Detecting CXX compile features - done
+[1.442s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.776s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[2.069s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.459s] -- Configuring done (2.3s)
+[2.470s] -- Generating done (0.0s)
+[2.475s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/build/robot_model
+[2.489s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/robot_model -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/install/robot_model
+[2.490s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/build/robot_model -- -j8 -l8
+[2.584s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[3.303s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.893s] -- Configuring done (1.3s)
+[3.907s] -- Generating done (0.0s)
+[3.915s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/build/robot_model
+[4.053s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/build/robot_model -- -j8 -l8
+[4.054s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/build/robot_model
+[4.093s] -- Install configuration: ""
+[4.094s] -- Execute custom install script
+[4.094s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/urdf/diffbot.urdf.xacro
+[4.094s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/launch/description.launch.py
+[4.137s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/rviz/description.rviz
+[4.191s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/ament_index/resource_index/package_run_dependencies/robot_model
+[4.242s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/ament_index/resource_index/parent_prefix_path/robot_model
+[4.295s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/environment/ament_prefix_path.sh
+[4.315s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/environment/ament_prefix_path.dsv
+[4.352s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/environment/path.sh
+[4.411s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/environment/path.dsv
+[4.464s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/local_setup.bash
+[4.505s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/local_setup.sh
+[4.560s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/local_setup.zsh
+[4.608s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/local_setup.dsv
+[4.694s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/package.dsv
+[4.712s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/ament_index/resource_index/packages/robot_model
+[4.733s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/cmake/robot_modelConfig.cmake
+[4.759s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/cmake/robot_modelConfig-version.cmake
+[4.813s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/robot_model/share/robot_model/package.xml
+[4.841s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/build/robot_model

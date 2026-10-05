@@ -1,0 +1,4 @@
+Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model
+Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model

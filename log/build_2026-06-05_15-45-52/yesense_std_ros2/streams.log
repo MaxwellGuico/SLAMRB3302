@@ -1,0 +1,124 @@
+[0.030s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/yesense_std_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2
+[0.181s] -- The C compiler identification is GNU 13.3.0
+[0.329s] -- The CXX compiler identification is GNU 13.3.0
+[0.383s] -- Detecting C compiler ABI info
+[0.655s] -- Detecting C compiler ABI info - done
+[0.730s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.731s] -- Detecting C compile features
+[0.733s] -- Detecting C compile features - done
+[0.757s] -- Detecting CXX compiler ABI info
+[1.056s] -- Detecting CXX compiler ABI info - done
+[1.120s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.122s] -- Detecting CXX compile features
+[1.122s] -- Detecting CXX compile features - done
+[1.132s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.466s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.615s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.776s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.846s] -- Found rosidl_generator_c: 4.6.9 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.871s] -- Found rosidl_generator_cpp: 4.6.9 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.899s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.931s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.051s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.058s] -- Found rmw_fastrtps_cpp: 8.4.4 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[2.253s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[2.291s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[2.332s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.445s] -- Found std_msgs: 5.3.8 (/opt/ros/jazzy/share/std_msgs/cmake)
+[2.465s] -- Found sensor_msgs: 5.3.8 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.509s] -- Found serial: 1.2.1 (/home/ubuntu/rb3302_final_proj_code/install/serial/share/serial/cmake)
+[2.522s] -- Found nav_msgs: 5.3.8 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[2.571s] -- Found visualization_msgs: 5.3.8 (/opt/ros/jazzy/share/visualization_msgs/cmake)
+[2.615s] -- Found rosidl_default_generators: 1.6.1 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[2.652s] -- Found rosidl_adapter: 4.6.9 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[2.655s] -- Found yesense_interface: 1.0.0 (/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/share/yesense_interface/cmake)
+[2.689s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[2.902s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.905s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.906s] -- Configured cppcheck include dirs: 
+[2.907s] -- Configured cppcheck exclude dirs and/or files: 
+[2.909s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.911s] -- Configured cpplint exclude dirs and/or files: 
+[2.912s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.914s] -- Configured 'flake8' exclude dirs and/or files: 
+[2.914s] -- Added test 'lint_cmake' to check CMake code style
+[2.915s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.915s] -- Added test 'uncrustify' to check C / C++ code style
+[2.918s] -- Configured uncrustify additional arguments: 
+[2.918s] -- Added test 'xmllint' to check XML markup files
+[2.919s] -- Configuring done (2.9s)
+[2.954s] -- Generating done (0.0s)
+[2.957s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2
+[2.976s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2' returned '0': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/yesense_std_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2
+[2.984s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2 -- -j8 -l8
+[3.032s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[3.445s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.498s] -- Found rclcpp: 28.1.21 (/opt/ros/jazzy/share/rclcpp/cmake)
+[3.555s] -- Found rosidl_generator_c: 4.6.9 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[3.568s] -- Found rosidl_generator_cpp: 4.6.9 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[3.584s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[3.602s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[3.671s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[3.673s] -- Found rmw_fastrtps_cpp: 8.4.4 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[3.752s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.825s] -- Found std_msgs: 5.3.8 (/opt/ros/jazzy/share/std_msgs/cmake)
+[3.840s] -- Found sensor_msgs: 5.3.8 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[3.878s] -- Found serial: 1.2.1 (/home/ubuntu/rb3302_final_proj_code/install/serial/share/serial/cmake)
+[3.880s] -- Found nav_msgs: 5.3.8 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[3.907s] -- Found visualization_msgs: 5.3.8 (/opt/ros/jazzy/share/visualization_msgs/cmake)
+[3.934s] -- Found rosidl_default_generators: 1.6.1 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[3.948s] -- Found rosidl_adapter: 4.6.9 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[3.950s] -- Found yesense_interface: 1.0.0 (/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/share/yesense_interface/cmake)
+[3.980s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[4.134s] -- Added test 'copyright' to check source files copyright and LICENSE
+[4.134s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[4.135s] -- Configured cppcheck include dirs: 
+[4.136s] -- Configured cppcheck exclude dirs and/or files: 
+[4.137s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[4.138s] -- Configured cpplint exclude dirs and/or files: 
+[4.138s] -- Added test 'flake8' to check Python code syntax and style conventions
+[4.139s] -- Configured 'flake8' exclude dirs and/or files: 
+[4.140s] -- Added test 'lint_cmake' to check CMake code style
+[4.141s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[4.142s] -- Added test 'uncrustify' to check C / C++ code style
+[4.143s] -- Configured uncrustify additional arguments: 
+[4.144s] -- Added test 'xmllint' to check XML markup files
+[4.145s] -- Configuring done (1.1s)
+[4.168s] -- Generating done (0.0s)
+[4.176s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2
+[4.249s] gmake[2]: Warning: File '/home/ubuntu/rb3302_final_proj_code/robot_ws/src/yesense_std_ros2/src/yesense_node.cpp' has modification time 6912006 s in the future
+[4.262s] [ 16%] [32mBuilding CXX object CMakeFiles/yesense_node_publisher.dir/src/yesense_std_out_decoder.cpp.o[0m
+[4.267s] [ 33%] [32mBuilding CXX object CMakeFiles/yesense_node_publisher.dir/src/yesense_decoder.cpp.o[0m
+[4.267s] gmake[2]: Warning: File '/opt/ros/jazzy/lib/librclcpp.so' has modification time 583897 s in the future
+[4.279s] [ 50%] [32mBuilding CXX object CMakeFiles/yesense_node_publisher.dir/src/yesense_node.cpp.o[0m
+[4.280s] [ 66%] [32mBuilding CXX object CMakeFiles/yesense_node_subscriber.dir/src/yesense_node_subscriber_example.cpp.o[0m
+[26.998s] [ 83%] [32m[1mLinking CXX executable yesense_node_subscriber[0m
+[27.782s] [100%] [32m[1mLinking CXX executable yesense_node_publisher[0m
+[28.282s] gmake[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[28.303s] [100%] Built target yesense_node_subscriber
+[28.833s] gmake[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[28.853s] [100%] Built target yesense_node_publisher
+[28.880s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2' returned '0': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2 -- -j8 -l8
+[28.891s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2
+[28.907s] -- Install configuration: ""
+[28.909s] -- Execute custom install script
+[28.910s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/launch/yesense_node.launch.py
+[28.925s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/config/yesense_config.yaml
+[28.942s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/lib/yesense_std_ros2/yesense_node_publisher
+[28.961s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/lib/yesense_std_ros2/yesense_node_subscriber
+[28.979s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/ament_index/resource_index/package_run_dependencies/yesense_std_ros2
+[29.000s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/ament_index/resource_index/parent_prefix_path/yesense_std_ros2
+[29.021s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/environment/ament_prefix_path.sh
+[29.040s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/environment/ament_prefix_path.dsv
+[29.062s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/environment/path.sh
+[29.084s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/environment/path.dsv
+[29.106s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/local_setup.bash
+[29.129s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/local_setup.sh
+[29.151s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/local_setup.zsh
+[29.174s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/local_setup.dsv
+[29.196s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/package.dsv
+[29.218s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/ament_index/resource_index/packages/yesense_std_ros2
+[29.241s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/cmake/yesense_std_ros2Config.cmake
+[29.265s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/cmake/yesense_std_ros2Config-version.cmake
+[29.284s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/install/yesense_std_ros2/share/yesense_std_ros2/package.xml
+[29.324s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2' returned '0': AMENT_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_init:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_std_ros2:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/yesense_interface:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/serial:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/rplidar_ros:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp:/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_astar:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy LD_LIBRARY_PATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib:/home/ubuntu/rb3302_final_proj_code/install/serial/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ubuntu/rb3302_final_proj_code/install/yesense_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/build/yesense_std_ros2
