@@ -5,6 +5,7 @@
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/config/nav2_params_original.yaml
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/rviz/navigation.rviz
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/lib/planning_rpp/initial_pose_nav_starter.py
+/home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/lib/planning_rpp/yaw_diagnostic.py
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/package_run_dependencies/planning_rpp
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/ament_index/resource_index/parent_prefix_path/planning_rpp
 /home/ubuntu/rb3302_final_proj_code/student_ws/install/planning_rpp/share/planning_rpp/environment/ament_prefix_path.sh

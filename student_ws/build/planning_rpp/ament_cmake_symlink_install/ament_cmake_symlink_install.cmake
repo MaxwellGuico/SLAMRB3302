@@ -318,8 +318,8 @@ message(STATUS "Execute custom install script")
 # install(DIRECTORY "launch" "config" "rviz" "DESTINATION" "share/planning_rpp")
 ament_cmake_symlink_install_directory("/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp" DIRECTORY "launch" "config" "rviz" "DESTINATION" "share/planning_rpp")
 
-# install(PROGRAMS "scripts/initial_pose_nav_starter.py" "DESTINATION" "lib/planning_rpp")
-ament_cmake_symlink_install_programs("/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp" PROGRAMS "scripts/initial_pose_nav_starter.py" "DESTINATION" "lib/planning_rpp")
+# install(PROGRAMS "scripts/initial_pose_nav_starter.py" "scripts/yaw_diagnostic.py" "DESTINATION" "lib/planning_rpp")
+ament_cmake_symlink_install_programs("/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp" PROGRAMS "scripts/initial_pose_nav_starter.py" "scripts/yaw_diagnostic.py" "DESTINATION" "lib/planning_rpp")
 
 # install(FILES "/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/planning_rpp" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp" FILES "/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_rpp/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/planning_rpp" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

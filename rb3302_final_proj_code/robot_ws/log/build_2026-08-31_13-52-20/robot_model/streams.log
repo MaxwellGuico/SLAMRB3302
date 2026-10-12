@@ -1,0 +1,44 @@
+[0.034s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/robot_model -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model
+[0.284s] -- The C compiler identification is GNU 13.3.0
+[0.515s] -- The CXX compiler identification is GNU 13.3.0
+[0.580s] -- Detecting C compiler ABI info
+[0.870s] -- Detecting C compiler ABI info - done
+[0.925s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.927s] -- Detecting C compile features
+[0.928s] -- Detecting C compile features - done
+[0.947s] -- Detecting CXX compiler ABI info
+[1.199s] -- Detecting CXX compiler ABI info - done
+[1.241s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.241s] -- Detecting CXX compile features
+[1.242s] -- Detecting CXX compile features - done
+[1.247s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.572s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.794s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.126s] -- Configuring done (2.0s)
+[2.145s] -- Generating done (0.0s)
+[2.154s] -- Build files have been written to: /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model
+[2.170s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake /home/ubuntu/rb3302_final_proj_code/robot_ws/src/robot_model -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model
+[2.180s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+[2.337s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+[2.384s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model
+[2.420s] -- Install configuration: ""
+[2.421s] -- Execute custom install script
+[2.422s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/urdf/diffbot.urdf.xacro
+[2.458s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/launch/description.launch.py
+[2.497s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/rviz/description.rviz
+[2.535s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/package_run_dependencies/robot_model
+[2.572s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/parent_prefix_path/robot_model
+[2.588s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/ament_prefix_path.sh
+[2.619s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/ament_prefix_path.dsv
+[2.664s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/path.sh
+[2.706s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/path.dsv
+[2.751s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.bash
+[2.788s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.sh
+[2.825s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.zsh
+[2.866s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.dsv
+[2.921s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/package.dsv
+[2.972s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/packages/robot_model
+[3.034s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/cmake/robot_modelConfig.cmake
+[3.086s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/cmake/robot_modelConfig-version.cmake
+[3.137s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/package.xml
+[3.202s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model

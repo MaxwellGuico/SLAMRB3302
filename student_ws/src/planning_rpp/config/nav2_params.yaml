@@ -19,7 +19,7 @@ amcl:
 
     # Update more frequently in the small 0.60 m cells.
     update_min_d: 0.05
-    update_min_a: 0.05
+    update_min_a: 0.01 # og 0.05
     resample_interval: 1
 
     min_particles: 300
@@ -63,6 +63,10 @@ controller_server:
       movement_time_allowance: 20.0
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
+      # Added 061026
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.05
+      stateful: true
     FollowPath:
       plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
       # Conservative values for the 0.60 m grid and tight right-angle turns.
@@ -88,7 +92,9 @@ controller_server:
       regulated_linear_scaling_min_speed: 0.12
       allow_reversing: false
       # This was the main reason I found out about the fake odom angular z
-      use_rotate_to_heading: false # putting this to true makes the robot only yaw, 
+      use_rotate_to_heading: false 
+      # Added 061026
+      rotate_to_heading_angular_vel: 0.5
       rotate_to_heading_min_angle: 0.35
       max_angular_accel: 0.8
       stateful: true

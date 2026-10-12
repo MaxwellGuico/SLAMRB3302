@@ -107,7 +107,7 @@ class InitialPoseNavStarter(Node):
             self.navigation_started = True
             self.timer.cancel()
 
-            self.get_logger().info(
+            self.get_logger().info(     
                 'Navigation lifecycle started successfully.'
             )
         else:
@@ -122,7 +122,7 @@ def main(args=None):
     node = InitialPoseNavStarter()
 
     try:
-    rclpy.spin(node)
+        rclpy.spin(node)
     except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:

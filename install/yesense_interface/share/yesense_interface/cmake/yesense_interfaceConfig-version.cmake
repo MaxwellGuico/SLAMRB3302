@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/build/yesense_interface/ament_cmake_core/yesense_interfaceConfig-version.cmake

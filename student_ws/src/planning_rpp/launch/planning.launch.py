@@ -104,8 +104,8 @@ def generate_launch_description():
                 'odom0_config': [
                     False, False, False,
                     False, False, False, # Enabled yaw Added this
-                    True, False, False, 
-                    False, False, True,
+                    True,  False, False, 
+                    False, False, False, # Disabled wheel yaw rate
                     False, False, False,
                 ],
                 '''
@@ -125,7 +125,7 @@ def generate_launch_description():
                     False, False, False,
                     False, False, False, # absolute yaw disabled
                     False, False, False,
-                    False, False, False, # Disabled vyaw
+                    False, False, True, # Enabled IMU Angular_velocity.z
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,

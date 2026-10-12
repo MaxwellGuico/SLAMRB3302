@@ -1,0 +1,28 @@
+[0.052s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+[0.111s] gmake: Warning: File 'Makefile' has modification time 7503955 s in the future
+[0.156s] gmake[1]: Warning: File 'CMakeFiles/Makefile2' has modification time 7503955 s in the future
+[0.156s] gmake[1]: warning:  Clock skew detected.  Your build may be incomplete.
+[0.170s] gmake: warning:  Clock skew detected.  Your build may be incomplete.
+[0.522s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --build /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model -- -j8 -l8
+[0.527s] Invoking command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model
+[0.554s] -- Install configuration: ""
+[0.566s] -- Execute custom install script
+[0.567s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/urdf/diffbot.urdf.xacro
+[0.569s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/launch/description.launch.py
+[0.573s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/rviz/description.rviz
+[0.573s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/package_run_dependencies/robot_model
+[0.578s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/parent_prefix_path/robot_model
+[0.581s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/ament_prefix_path.sh
+[0.581s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/ament_prefix_path.dsv
+[0.582s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/path.sh
+[0.582s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/environment/path.dsv
+[0.583s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.bash
+[0.583s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.sh
+[0.584s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.zsh
+[0.584s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/local_setup.dsv
+[0.584s] -- Symlinking: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/package.dsv
+[0.604s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/ament_index/resource_index/packages/robot_model
+[0.606s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/cmake/robot_modelConfig.cmake
+[0.607s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/cmake/robot_modelConfig-version.cmake
+[0.607s] -- Up-to-date symlink: /home/ubuntu/rb3302_final_proj_code/robot_ws/install/robot_model/share/robot_model/package.xml
+[0.703s] Invoked command in '/home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/rb3302_final_proj_code/robot_ws/install/waverover_base:/home/ubuntu/rb3302_final_proj_code/student_ws/install/mapping_cartographer:/opt/ros/jazzy /usr/bin/cmake --install /home/ubuntu/rb3302_final_proj_code/robot_ws/build/robot_model

@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/imu_data_ten_axis__type_support.h

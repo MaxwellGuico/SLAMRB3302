@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/build/mapping_cartographer/config/cartographer.lua
