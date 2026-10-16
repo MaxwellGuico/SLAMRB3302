@@ -23,7 +23,6 @@ CMakeFiles/yesense_interface__rosidl_generator_c.dir/rosidl_generator_c/yesense_
  /usr/include/aarch64-linux-gnu/bits/stdint-intn.h \
  /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/aarch64-linux-gnu/bits/stdint-least.h \
- /opt/ros/jazzy/include/rosidl_typesupport_interface/rosidl_typesupport_interface/macros.h \
  /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sensor_temp__functions.h \
  /usr/include/stdlib.h /usr/include/aarch64-linux-gnu/bits/waitflags.h \
  /usr/include/aarch64-linux-gnu/bits/waitstatus.h \
@@ -68,6 +67,7 @@ CMakeFiles/yesense_interface__rosidl_generator_c.dir/rosidl_generator_c/yesense_
  /opt/ros/jazzy/include/rcutils/rcutils/visibility_control_macros.h \
  /opt/ros/jazzy/include/rcutils/rcutils/sha256.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/visibility_control.h \
+ /opt/ros/jazzy/include/rosidl_typesupport_interface/rosidl_typesupport_interface/macros.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/service_type_support_struct.h \
  /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/rosidl_generator_c__visibility_control.h \
  /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sensor_temp__type_support.h

@@ -41,14 +41,6 @@ CMakeFiles/yesense_interface__rosidl_generator_c.dir/rosidl_generator_c/yesense_
  /opt/ros/jazzy/include/rcutils/rcutils/visibility_control_macros.h \
  /opt/ros/jazzy/include/rcutils/rcutils/sha256.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/visibility_control.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/attitude_min_ahrs__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/attitude_min_vru__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/imu_data__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/tid__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/three_axis__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sensor_temp__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sample_timestamp__struct.h \
- /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/euler_angle__struct.h \
  /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/attitude_min_ahrs__functions.h \
  /usr/include/stdlib.h /usr/include/aarch64-linux-gnu/bits/waitflags.h \
  /usr/include/aarch64-linux-gnu/bits/waitstatus.h \
@@ -77,4 +69,12 @@ CMakeFiles/yesense_interface__rosidl_generator_c.dir/rosidl_generator_c/yesense_
  /usr/include/aarch64-linux-gnu/bits/struct_rwlock.h \
  /usr/include/alloca.h /usr/include/aarch64-linux-gnu/bits/stdlib-float.h \
  /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/action_type_support_struct.h \
- /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/service_type_support_struct.h
+ /opt/ros/jazzy/include/rosidl_runtime_c/rosidl_runtime_c/service_type_support_struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/attitude_min_ahrs__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/attitude_min_vru__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/imu_data__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/tid__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/three_axis__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sensor_temp__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/sample_timestamp__struct.h \
+ /home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_generator_c/yesense_interface/msg/detail/euler_angle__struct.h

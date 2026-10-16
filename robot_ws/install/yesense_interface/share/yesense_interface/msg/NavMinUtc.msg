@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/robot_ws/src/yesense_interface/msg/NavMinUtc.msg

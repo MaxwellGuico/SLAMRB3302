@@ -23,16 +23,16 @@ yesense_interface__msg__NavAll__get_type_hash(
 #include <string.h>
 
 // Include directives for referenced types
-#include "yesense_interface/msg/detail/pressure__functions.h"
-#include "yesense_interface/msg/detail/utc__functions.h"
+#include "yesense_interface/msg/detail/nav_status__functions.h"
+#include "yesense_interface/msg/detail/gnss_pos__functions.h"
 #include "yesense_interface/msg/detail/tid__functions.h"
 #include "yesense_interface/msg/detail/quat__functions.h"
-#include "yesense_interface/msg/detail/vel__functions.h"
-#include "yesense_interface/msg/detail/euler_angle__functions.h"
-#include "yesense_interface/msg/detail/gnss_pos__functions.h"
 #include "yesense_interface/msg/detail/three_axis__functions.h"
+#include "yesense_interface/msg/detail/utc__functions.h"
+#include "yesense_interface/msg/detail/euler_angle__functions.h"
+#include "yesense_interface/msg/detail/pressure__functions.h"
+#include "yesense_interface/msg/detail/vel__functions.h"
 #include "yesense_interface/msg/detail/sensor_temp__functions.h"
-#include "yesense_interface/msg/detail/nav_status__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG

@@ -25,13 +25,13 @@ yesense_interface__msg__AttitudeAllData__get_type_hash(
 // Include directives for referenced types
 #include "yesense_interface/msg/detail/tid__functions.h"
 #include "yesense_interface/msg/detail/quat__functions.h"
-#include "yesense_interface/msg/detail/attitude_min_vru__functions.h"
-#include "yesense_interface/msg/detail/attitude_min_ahrs__functions.h"
-#include "yesense_interface/msg/detail/imu_data__functions.h"
-#include "yesense_interface/msg/detail/euler_angle__functions.h"
-#include "yesense_interface/msg/detail/three_axis__functions.h"
 #include "yesense_interface/msg/detail/sample_timestamp__functions.h"
+#include "yesense_interface/msg/detail/imu_data__functions.h"
+#include "yesense_interface/msg/detail/three_axis__functions.h"
+#include "yesense_interface/msg/detail/euler_angle__functions.h"
+#include "yesense_interface/msg/detail/attitude_min_ahrs__functions.h"
 #include "yesense_interface/msg/detail/sensor_temp__functions.h"
+#include "yesense_interface/msg/detail/attitude_min_vru__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG

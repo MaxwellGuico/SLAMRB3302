@@ -4,10 +4,10 @@
 
 #include <string.h>
 
-#include "yesense_interface/msg/detail/euler_angle__type_support.h"
 #include "yesense_interface/msg/detail/euler_angle__struct.h"
 #include "rosidl_typesupport_interface/macros.h"
 #include "yesense_interface/msg/detail/euler_angle__functions.h"
+#include "yesense_interface/msg/detail/euler_angle__type_support.h"
 
 #ifdef __cplusplus
 extern "C"

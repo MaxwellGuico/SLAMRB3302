@@ -4,9 +4,9 @@
 
 #include <string.h>
 
+#include "yesense_interface/msg/detail/attitude_all_data__type_support.h"
 #include "yesense_interface/msg/detail/attitude_all_data__struct.h"
 #include "rosidl_typesupport_interface/macros.h"
-#include "yesense_interface/msg/detail/attitude_all_data__type_support.h"
 #include "yesense_interface/msg/detail/attitude_all_data__functions.h"
 
 #ifdef __cplusplus

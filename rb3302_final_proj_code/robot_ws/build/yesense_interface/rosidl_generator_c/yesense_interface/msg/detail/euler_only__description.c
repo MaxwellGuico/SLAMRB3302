@@ -23,8 +23,8 @@ yesense_interface__msg__EulerOnly__get_type_hash(
 #include <string.h>
 
 // Include directives for referenced types
-#include "yesense_interface/msg/detail/tid__functions.h"
 #include "yesense_interface/msg/detail/euler_angle__functions.h"
+#include "yesense_interface/msg/detail/tid__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG

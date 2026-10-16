@@ -4,10 +4,10 @@
 
 #include <string.h>
 
-#include "rosidl_typesupport_interface/macros.h"
-#include "yesense_interface/msg/detail/gnss_pos__struct.h"
 #include "yesense_interface/msg/detail/gnss_pos__type_support.h"
+#include "yesense_interface/msg/detail/gnss_pos__struct.h"
 #include "yesense_interface/msg/detail/gnss_pos__functions.h"
+#include "rosidl_typesupport_interface/macros.h"
 
 #ifdef __cplusplus
 extern "C"

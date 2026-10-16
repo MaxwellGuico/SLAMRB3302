@@ -5,9 +5,9 @@
 #include <string.h>
 
 #include "yesense_interface/msg/detail/attitude_min_ahrs__type_support.h"
-#include "yesense_interface/msg/detail/attitude_min_ahrs__struct.h"
 #include "yesense_interface/msg/detail/attitude_min_ahrs__functions.h"
 #include "rosidl_typesupport_interface/macros.h"
+#include "yesense_interface/msg/detail/attitude_min_ahrs__struct.h"
 
 #ifdef __cplusplus
 extern "C"

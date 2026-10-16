@@ -123,9 +123,9 @@ def generate_launch_description():
                 'imu0': imu_topic,
                 'imu0_config': [
                     False, False, False,
-                    False, False, False, # absolute yaw disabled
+                    False, False, True, # absolute yaw disabled
                     False, False, False,
-                    False, False, True, # Enabled IMU Angular_velocity.z
+                    False, False, False, # Disabled IMU Angular_velocity.z as of 12 Oct
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,

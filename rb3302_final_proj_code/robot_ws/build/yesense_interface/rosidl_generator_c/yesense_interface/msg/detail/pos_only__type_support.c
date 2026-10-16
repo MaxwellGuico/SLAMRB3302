@@ -5,9 +5,9 @@
 #include <string.h>
 
 #include "yesense_interface/msg/detail/pos_only__functions.h"
+#include "yesense_interface/msg/detail/pos_only__type_support.h"
 #include "yesense_interface/msg/detail/pos_only__struct.h"
 #include "rosidl_typesupport_interface/macros.h"
-#include "yesense_interface/msg/detail/pos_only__type_support.h"
 
 #ifdef __cplusplus
 extern "C"

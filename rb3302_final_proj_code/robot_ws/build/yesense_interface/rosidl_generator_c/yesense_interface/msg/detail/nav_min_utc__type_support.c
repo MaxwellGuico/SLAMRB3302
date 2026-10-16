@@ -4,10 +4,10 @@
 
 #include <string.h>
 
-#include "yesense_interface/msg/detail/nav_min_utc__functions.h"
-#include "rosidl_typesupport_interface/macros.h"
 #include "yesense_interface/msg/detail/nav_min_utc__type_support.h"
+#include "rosidl_typesupport_interface/macros.h"
 #include "yesense_interface/msg/detail/nav_min_utc__struct.h"
+#include "yesense_interface/msg/detail/nav_min_utc__functions.h"
 
 #ifdef __cplusplus
 extern "C"

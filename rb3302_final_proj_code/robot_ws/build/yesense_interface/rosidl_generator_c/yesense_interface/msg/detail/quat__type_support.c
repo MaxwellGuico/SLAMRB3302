@@ -4,10 +4,10 @@
 
 #include <string.h>
 
+#include "yesense_interface/msg/detail/quat__type_support.h"
 #include "yesense_interface/msg/detail/quat__struct.h"
 #include "rosidl_typesupport_interface/macros.h"
 #include "yesense_interface/msg/detail/quat__functions.h"
-#include "yesense_interface/msg/detail/quat__type_support.h"
 
 #ifdef __cplusplus
 extern "C"

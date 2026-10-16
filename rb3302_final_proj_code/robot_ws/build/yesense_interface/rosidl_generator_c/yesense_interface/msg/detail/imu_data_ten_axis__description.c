@@ -23,12 +23,12 @@ yesense_interface__msg__ImuDataTenAxis__get_type_hash(
 #include <string.h>
 
 // Include directives for referenced types
-#include "yesense_interface/msg/detail/pressure__functions.h"
 #include "yesense_interface/msg/detail/tid__functions.h"
-#include "yesense_interface/msg/detail/imu_data__functions.h"
-#include "yesense_interface/msg/detail/three_axis__functions.h"
-#include "yesense_interface/msg/detail/sensor_temp__functions.h"
 #include "yesense_interface/msg/detail/sample_timestamp__functions.h"
+#include "yesense_interface/msg/detail/three_axis__functions.h"
+#include "yesense_interface/msg/detail/imu_data__functions.h"
+#include "yesense_interface/msg/detail/pressure__functions.h"
+#include "yesense_interface/msg/detail/sensor_temp__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG

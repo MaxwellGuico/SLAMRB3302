@@ -23,13 +23,13 @@ yesense_interface__msg__NavMinUtc__get_type_hash(
 #include <string.h>
 
 // Include directives for referenced types
-#include "yesense_interface/msg/detail/utc__functions.h"
-#include "yesense_interface/msg/detail/tid__functions.h"
 #include "yesense_interface/msg/detail/nav_min__functions.h"
-#include "yesense_interface/msg/detail/euler_angle__functions.h"
-#include "yesense_interface/msg/detail/gnss_pos__functions.h"
-#include "yesense_interface/msg/detail/pos_only__functions.h"
 #include "yesense_interface/msg/detail/nav_status__functions.h"
+#include "yesense_interface/msg/detail/gnss_pos__functions.h"
+#include "yesense_interface/msg/detail/tid__functions.h"
+#include "yesense_interface/msg/detail/utc__functions.h"
+#include "yesense_interface/msg/detail/euler_angle__functions.h"
+#include "yesense_interface/msg/detail/pos_only__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG

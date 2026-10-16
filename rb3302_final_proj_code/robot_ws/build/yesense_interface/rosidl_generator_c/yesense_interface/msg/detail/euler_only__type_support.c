@@ -4,10 +4,10 @@
 
 #include <string.h>
 
-#include "yesense_interface/msg/detail/euler_only__struct.h"
-#include "rosidl_typesupport_interface/macros.h"
 #include "yesense_interface/msg/detail/euler_only__type_support.h"
 #include "yesense_interface/msg/detail/euler_only__functions.h"
+#include "yesense_interface/msg/detail/euler_only__struct.h"
+#include "rosidl_typesupport_interface/macros.h"
 
 #ifdef __cplusplus
 extern "C"

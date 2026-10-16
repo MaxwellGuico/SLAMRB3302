@@ -24,8 +24,8 @@ yesense_interface__msg__PosOnly__get_type_hash(
 
 // Include directives for referenced types
 #include "yesense_interface/msg/detail/nav_status__functions.h"
-#include "yesense_interface/msg/detail/tid__functions.h"
 #include "yesense_interface/msg/detail/gnss_pos__functions.h"
+#include "yesense_interface/msg/detail/tid__functions.h"
 
 // Hashes for external referenced types
 #ifndef NDEBUG
