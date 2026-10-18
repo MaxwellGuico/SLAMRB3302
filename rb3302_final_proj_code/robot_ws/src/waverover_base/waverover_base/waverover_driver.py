@@ -17,6 +17,8 @@ from tf2_ros import TransformBroadcaster
 
 import serial
 
+from waverover_base.wheel_odometry import WheelOdometry
+
 
 class DisplayServiceGuard:
     def __init__(self, service_name: str, logger):
@@ -155,6 +157,17 @@ class WaveRoverDriver(Node):
         self.declare_parameter("odom_topic", "odom/raw")
         self.declare_parameter("odom_frame", "odom")
         self.declare_parameter("base_frame", "base_link")
+        # Odometry is rebuilt from the signed per-wheel distances (see
+        # wheel_odometry.py). wheel_track must be calibrated on the robot.
+        self.declare_parameter("wheel_track", 0.288)
+        self.declare_parameter("wheel_dist_scale", 1.0)
+        # "wheels" = heading from (dist_R - dist_L) / wheel_track.
+        # "firmware" = old behaviour, heading from the board's yaw_odom.
+        self.declare_parameter("odom_yaw_source", "wheels")
+        # Twist variances reported to the EKF. Wheel yaw rate on a skid-steer
+        # base is poor, so the H30 gyro (0.03 rad/s stddev) should dominate.
+        self.declare_parameter("odom_vx_variance", 0.0025)
+        self.declare_parameter("odom_vyaw_variance", 0.04)
 
         self.declare_parameter("feedback_rate", 100.0)
         self.declare_parameter("feedback_interval_ms", 10)
@@ -185,6 +198,20 @@ class WaveRoverDriver(Node):
         self.odom_topic = self.get_parameter("odom_topic").value
         self.odom_frame = self.get_parameter("odom_frame").value
         self.base_frame = self.get_parameter("base_frame").value
+        self.odom_yaw_source = str(self.get_parameter("odom_yaw_source").value)
+        self.odom_vx_variance = float(self.get_parameter("odom_vx_variance").value)
+        self.odom_vyaw_variance = float(self.get_parameter("odom_vyaw_variance").value)
+        if self.odom_yaw_source not in ("wheels", "firmware"):
+            self.get_logger().warning(
+                f"Unknown odom_yaw_source '{self.odom_yaw_source}', using 'wheels'")
+            self.odom_yaw_source = "wheels"
+        self.wheel_odom = WheelOdometry(
+            wheel_track=float(self.get_parameter("wheel_track").value),
+            dist_scale=float(self.get_parameter("wheel_dist_scale").value),
+        )
+        self.get_logger().info(
+            f"Odometry: yaw from {self.odom_yaw_source}, "
+            f"wheel_track={self.wheel_odom.wheel_track:.3f} m")
 
         self.feedback_rate = self.get_parameter("feedback_rate").value
         self.feedback_interval_ms = self.get_parameter("feedback_interval_ms").value
@@ -217,18 +244,9 @@ class WaveRoverDriver(Node):
         self.battery_percentage = 0.0
         self.enc_A = 0
         self.enc_B = 0
-        self.odom_x = 0.0
-        self.odom_y = 0.0
-        self.prev_dist_centre = None
-        self.prev_odom_time = self.get_clock().now()
         self.running = True
         self.display_flash_on = True
         self.display_update_count = 0
-
-        # Added this
-        self.prev_yaw_odom = None
-        self.odom_angular_z = 0.0
-        self.prev_odom_angular_z_time = None
 
         self.display_service = DisplayServiceGuard("waverover-init.service", self.get_logger())
         self.display_service.stop()
@@ -346,22 +364,9 @@ class WaveRoverDriver(Node):
                 self.voltage = float(data.get("voltage", self.voltage))
                 self.battery_percentage = self._estimate_battery_percentage(self.voltage)
 
-                #Added this to calculate odom_angular_z
-                now = self.get_clock().now()
-                if self.prev_yaw_odom is not None and self.prev_odom_angular_z_time is not None:
-                    dt = (now - self.prev_odom_angular_z_time).nanoseconds / 1e9
-                    yaw_change = self.yaw_odom - self.prev_yaw_odom
-                    if dt > 1e-6:
-                        self.odom_angular_z = yaw_change/dt
-                    else:
-                        self.odom_angular_z = 0.0
-                else:
-                    self.odom_angular_z = 0.0
-                
-                self.prev_yaw_odom = self.yaw_odom
-                self.prev_odom_angular_z_time = now
+                now_s = self.get_clock().now().nanoseconds / 1e9
+                self.wheel_odom.update(self.dist_L, self.dist_R, now_s)
 
-                
             elif t_code == 1002:
                 self.yaw_imu = float(data.get("yaw_imu", self.yaw_imu))
                 self.imu_roll = float(data.get("r", self.imu_roll))
@@ -410,25 +415,15 @@ class WaveRoverDriver(Node):
     def _publish_odom(self):
         now = self.get_clock().now()
         with self.feedback_lock:
-            dist_centre = float(self.dist_centre)
-            #yaw = self._yaw_radians(float(self.yaw_odom)) # Original
-            yaw = float(self.yaw_odom)# Added this
-
-            #Added this
-            odom_angular_z =  float(self.odom_angular_z)
-
-        if self.prev_dist_centre is None:
-            delta_dist = 0.0
-        else:
-            delta_dist = dist_centre - self.prev_dist_centre
-
-        dt = (now - self.prev_odom_time).nanoseconds / 1e9
-        linear_velocity = delta_dist / dt if dt > 1e-6 else 0.0
-
-        self.odom_x += delta_dist * math.cos(yaw)
-        self.odom_y += delta_dist * math.sin(yaw)
-        self.prev_dist_centre = dist_centre
-        self.prev_odom_time = now
+            self.wheel_odom.decay_if_stale(now.nanoseconds / 1e9)
+            odom_x = self.wheel_odom.x
+            odom_y = self.wheel_odom.y
+            linear_velocity = self.wheel_odom.linear_velocity
+            if self.odom_yaw_source == "firmware":
+                yaw = self._yaw_radians(float(self.yaw_odom))
+            else:
+                yaw = self.wheel_odom.yaw
+            angular_velocity = self.wheel_odom.angular_velocity
 
         half_yaw = yaw * 0.5
         orientation_z = math.sin(half_yaw)
@@ -439,13 +434,20 @@ class WaveRoverDriver(Node):
         odom_msg.header.stamp = stamp
         odom_msg.header.frame_id = self.odom_frame
         odom_msg.child_frame_id = self.base_frame
-        odom_msg.pose.pose.position.x = self.odom_x
-        odom_msg.pose.pose.position.y = self.odom_y
+        odom_msg.pose.pose.position.x = odom_x
+        odom_msg.pose.pose.position.y = odom_y
         odom_msg.pose.pose.orientation.z = orientation_z
         odom_msg.pose.pose.orientation.w = orientation_w
+        # Pose is dead-reckoned and drifts without bound; the EKF uses the
+        # twist only, so report a large pose variance.
+        odom_msg.pose.covariance[0] = 1.0
+        odom_msg.pose.covariance[7] = 1.0
+        odom_msg.pose.covariance[35] = 1.0
         odom_msg.twist.twist.linear.x = linear_velocity
-        # odom_msg.twist.twist.angular.z = float(self.current_angular)
-        odom_msg.twist.twist.angular.z = odom_angular_z # Added this
+        odom_msg.twist.twist.angular.z = angular_velocity
+        odom_msg.twist.covariance[0] = self.odom_vx_variance
+        odom_msg.twist.covariance[7] = 1e-4   # vy: non-holonomic, ~0
+        odom_msg.twist.covariance[35] = self.odom_vyaw_variance
         self.odom_pub.publish(odom_msg)
 
         if self.publish_odom_tf:
@@ -453,8 +455,8 @@ class WaveRoverDriver(Node):
             transform.header.stamp = stamp
             transform.header.frame_id = self.odom_frame
             transform.child_frame_id = self.base_frame
-            transform.transform.translation.x = self.odom_x
-            transform.transform.translation.y = self.odom_y
+            transform.transform.translation.x = odom_x
+            transform.transform.translation.y = odom_y
             transform.transform.rotation.z = orientation_z
             transform.transform.rotation.w = orientation_w
             self.tf_broadcaster.sendTransform(transform)

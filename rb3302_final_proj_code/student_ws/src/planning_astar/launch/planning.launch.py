@@ -101,11 +101,18 @@ def generate_launch_description():
                 'base_link_frame': base_frame,
                 'world_frame': odom_frame,
                 'odom0': raw_odom_topic,
+                # Fused fields, in robot_localization order:
+                #   x, y, z, roll, pitch, yaw,
+                #   vx, vy, vz, vroll, vpitch, vyaw,
+                #   ax, ay, az
+                # Wheels: forward speed + yaw rate. The driver now computes
+                # the yaw rate from (dist_R - dist_L) / wheel_track, so the
+                # EKF still sees spins if the H30 drops out.
                 'odom0_config': [
                     False, False, False,
                     False, False, False,
-                    True, False, False,
-                    False, False, False,
+                    True,  False, False,
+                    False, False, True,
                     False, False, False,
                 ],
                 'odom0_queue_size': 10,
@@ -114,9 +121,12 @@ def generate_launch_description():
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
                 'imu0': imu_topic,
+                # H30: gyro yaw rate only. Absolute yaw stays off until the
+                # H30 orientation check on the robot passes (see robot checks
+                # doc); a wrong-signed absolute yaw would fight the wheels.
                 'imu0_config': [
                     False, False, False,
-                    False, False, True,
+                    False, False, False,
                     False, False, False,
                     False, False, True,
                     False, False, False,

@@ -7,6 +7,7 @@ from rclpy.time import Time
 
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from nav2_msgs.srv import ManageLifecycleNodes
+from std_srvs.srv import Empty
 from tf2_ros import Buffer, TransformListener
 from rclpy.executors import ExternalShutdownException
 
@@ -18,6 +19,16 @@ class InitialPoseNavStarter(Node):
         self.initial_pose_received = False
         self.start_request_in_progress = False
         self.navigation_started = False
+
+        # AMCL only updates when odometry reports motion, so a pose set from
+        # RViz never snaps onto the walls while the robot sits still. After
+        # each initial pose, force a few scan-matching updates in place.
+        self.declare_parameter('nomotion_updates', 8)
+        self.nomotion_updates = int(self.get_parameter('nomotion_updates').value)
+        self.nomotion_remaining = 0
+        self.nomotion_client = self.create_client(
+            Empty, '/request_nomotion_update')
+        self.nomotion_timer = self.create_timer(0.5, self.nomotion_tick)
 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
@@ -44,6 +55,9 @@ class InitialPoseNavStarter(Node):
         )
 
     def initial_pose_callback(self, msg):
+        # Re-arm the in-place AMCL updates on every new initial pose.
+        self.nomotion_remaining = self.nomotion_updates
+
         if self.navigation_started:
             return
 
@@ -51,6 +65,18 @@ class InitialPoseNavStarter(Node):
         self.get_logger().info(
             'Initial pose received. Waiting for map -> base_link...'
         )
+
+    def nomotion_tick(self):
+        if self.nomotion_remaining <= 0:
+            return
+        if not self.nomotion_client.service_is_ready():
+            return
+        self.nomotion_client.call_async(Empty.Request())
+        self.nomotion_remaining -= 1
+        if self.nomotion_remaining == 0:
+            self.get_logger().info(
+                f'Sent {self.nomotion_updates} AMCL in-place updates '
+                'for the initial pose.')
 
     def try_start_navigation(self):
         if not self.initial_pose_received:

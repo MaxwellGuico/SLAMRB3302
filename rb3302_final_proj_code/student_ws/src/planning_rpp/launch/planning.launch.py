@@ -101,36 +101,39 @@ def generate_launch_description():
                 'base_link_frame': base_frame,
                 'world_frame': odom_frame,
                 'odom0': raw_odom_topic,
+                # Fused fields, in robot_localization order:
+                #   x, y, z, roll, pitch, yaw,
+                #   vx, vy, vz, vroll, vpitch, vyaw,
+                #   ax, ay, az
+                # Wheels: forward speed + yaw rate. The driver now computes
+                # the yaw rate from (dist_R - dist_L) / wheel_track, so the
+                # EKF still sees spins if the H30 drops out.
                 'odom0_config': [
                     False, False, False,
-                    False, False, False, # Enabled yaw Added this
-                    True,  False, False, 
-                    False, False, False, # Disabled wheel yaw rate
+                    False, False, False,
+                    True,  False, False,
+                    False, False, True,
                     False, False, False,
                 ],
-                '''
-                [x,y,z
-                 roll pitch, yaw
-                 vx,vy,vz,
-                 vroll,vpitch,vyaw,
-                 ax,ay,az]
-                '''
                 'odom0_queue_size': 10,
                 'odom0_differential': False,
                 'odom0_relative': False,
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
                 'imu0': imu_topic,
+                # H30: gyro yaw rate only. Absolute yaw stays off until the
+                # H30 orientation check on the robot passes (see robot checks
+                # doc); a wrong-signed absolute yaw would fight the wheels.
                 'imu0_config': [
                     False, False, False,
-                    False, False, True, # absolute yaw disabled
                     False, False, False,
-                    False, False, False, # Disabled IMU Angular_velocity.z as of 12 Oct
+                    False, False, False,
+                    False, False, True,
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,
                 'imu0_differential': False,
-                'imu0_relative': False, # if you want to use the orientation exactly as published by the IMU.
+                'imu0_relative': True,
                 'imu0_remove_gravitational_acceleration': False,
                 'imu0_pose_rejection_threshold': 5.0,
                 'imu0_twist_rejection_threshold': 5.0,
