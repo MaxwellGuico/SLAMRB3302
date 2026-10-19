@@ -76,7 +76,7 @@ def generate_launch_description():
         DeclareLaunchArgument('scan_topic', default_value='/scan'),
         DeclareLaunchArgument('odom_topic', default_value='/odom'),
         DeclareLaunchArgument('raw_odom_topic', default_value='/odom/raw'),
-        DeclareLaunchArgument('imu_topic', default_value='/imu_data_ros'),
+        DeclareLaunchArgument('imu_topic', default_value='/waverover/imu'),
         DeclareLaunchArgument('cmd_vel_topic', default_value='/cmd_vel'),
         DeclareLaunchArgument('set_initial_pose', default_value='false'),
         DeclareLaunchArgument('initial_pose_x', default_value='0.0'),
@@ -105,14 +105,13 @@ def generate_launch_description():
                 #   x, y, z, roll, pitch, yaw,
                 #   vx, vy, vz, vroll, vpitch, vyaw,
                 #   ax, ay, az
-                # Wheels: forward speed + yaw rate. The driver now computes
-                # the yaw rate from (dist_R - dist_L) / wheel_track, so the
-                # EKF still sees spins if the H30 drops out.
+                # Wheels: forward speed only (signed, so reversing is
+                # backwards). Heading comes from the IMU below.
                 'odom0_config': [
                     False, False, False,
                     False, False, False,
                     True,  False, False,
-                    False, False, True,
+                    False, False, False,
                     False, False, False,
                 ],
                 'odom0_queue_size': 10,
@@ -121,19 +120,18 @@ def generate_launch_description():
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
                 'imu0': imu_topic,
-                # H30: gyro yaw rate only. Absolute yaw stays off until the
-                # H30 orientation check on the robot passes (see robot checks
-                # doc); a wrong-signed absolute yaw would fight the wheels.
+                # Wave Rover built-in IMU (republished by waverover_driver on
+                # /waverover/imu): absolute yaw only. It has no gyro rate.
                 'imu0_config': [
                     False, False, False,
-                    False, False, False,
-                    False, False, False,
                     False, False, True,
+                    False, False, False,
+                    False, False, False,
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,
                 'imu0_differential': False,
-                'imu0_relative': True,
+                'imu0_relative': False,
                 'imu0_remove_gravitational_acceleration': False,
                 'imu0_pose_rejection_threshold': 5.0,
                 'imu0_twist_rejection_threshold': 5.0,

@@ -11,7 +11,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import TransformStamped, Twist
 from nav_msgs.msg import Odometry
-from sensor_msgs.msg import BatteryState
+from sensor_msgs.msg import BatteryState, Imu
 from std_msgs.msg import String, Float32, Float32MultiArray, Int32MultiArray
 from tf2_ros import TransformBroadcaster
 
@@ -168,6 +168,13 @@ class WaveRoverDriver(Node):
         # base is poor, so the H30 gyro (0.03 rad/s stddev) should dominate.
         self.declare_parameter("odom_vx_variance", 0.0025)
         self.declare_parameter("odom_vyaw_variance", 0.04)
+        # The board's built-in IMU (yaw_imu in json_feedback, degrees) is
+        # republished as sensor_msgs/Imu so the EKF can fuse its yaw.
+        self.declare_parameter("publish_imu", True)
+        self.declare_parameter("imu_topic", "waverover/imu")
+        # Set to -1.0 if yaw_imu falls when the robot turns anticlockwise.
+        self.declare_parameter("imu_yaw_sign", 1.0)
+        self.declare_parameter("imu_yaw_variance", 0.01)  # rad^2, ~6 deg
 
         self.declare_parameter("feedback_rate", 100.0)
         self.declare_parameter("feedback_interval_ms", 10)
@@ -201,6 +208,10 @@ class WaveRoverDriver(Node):
         self.odom_yaw_source = str(self.get_parameter("odom_yaw_source").value)
         self.odom_vx_variance = float(self.get_parameter("odom_vx_variance").value)
         self.odom_vyaw_variance = float(self.get_parameter("odom_vyaw_variance").value)
+        self.publish_imu = bool(self.get_parameter("publish_imu").value)
+        self.imu_topic = str(self.get_parameter("imu_topic").value)
+        self.imu_yaw_sign = float(self.get_parameter("imu_yaw_sign").value)
+        self.imu_yaw_variance = float(self.get_parameter("imu_yaw_variance").value)
         if self.odom_yaw_source not in ("wheels", "firmware"):
             self.get_logger().warning(
                 f"Unknown odom_yaw_source '{self.odom_yaw_source}', using 'wheels'")
@@ -240,6 +251,7 @@ class WaveRoverDriver(Node):
         self.yaw_imu = 0.0
         self.imu_roll = 0.0
         self.imu_pitch = 0.0
+        self.imu_fresh = False
         self.voltage = 0.0
         self.battery_percentage = 0.0
         self.enc_A = 0
@@ -268,6 +280,7 @@ class WaveRoverDriver(Node):
         self.battery_pub = self.create_publisher(BatteryState, "battery", 10)
         self.battery_percentage_pub = self.create_publisher(Float32, "battery_percentage", 10)
         self.odom_pub = self.create_publisher(Odometry, self.odom_topic, 10)
+        self.imu_pub = self.create_publisher(Imu, self.imu_topic, 10)
         self.tf_broadcaster = TransformBroadcaster(self)
 
         self.create_timer(1.0 / self.heartbeat_rate, self._heartbeat_callback)
@@ -359,6 +372,7 @@ class WaveRoverDriver(Node):
                 self.dist_centre = float(data.get("dist_centre", self.dist_centre))
                 self.yaw_odom = float(data.get("yaw_odom", self.yaw_odom))
                 self.yaw_imu = float(data.get("yaw_imu", self.yaw_imu))
+                self.imu_fresh = self.imu_fresh or ("yaw_imu" in data)
                 self.enc_A = int(data.get("encA", self.enc_A))
                 self.enc_B = int(data.get("encB", self.enc_B))
                 self.voltage = float(data.get("voltage", self.voltage))
@@ -369,6 +383,7 @@ class WaveRoverDriver(Node):
 
             elif t_code == 1002:
                 self.yaw_imu = float(data.get("yaw_imu", self.yaw_imu))
+                self.imu_fresh = self.imu_fresh or ("yaw_imu" in data)
                 self.imu_roll = float(data.get("r", self.imu_roll))
                 self.imu_pitch = float(data.get("p", self.imu_pitch))
 
@@ -406,6 +421,32 @@ class WaveRoverDriver(Node):
 
         if self.publish_odom:
             self._publish_odom()
+
+        if self.publish_imu:
+            self._publish_imu()
+
+    def _publish_imu(self):
+        with self.feedback_lock:
+            if not self.imu_fresh:
+                return
+            self.imu_fresh = False
+            yaw_deg = float(self.yaw_imu)
+
+        yaw = self.imu_yaw_sign * math.radians(yaw_deg)
+        msg = Imu()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        # The board sits flat in the chassis, so its yaw is base_link yaw.
+        msg.header.frame_id = self.base_frame
+        msg.orientation.z = math.sin(0.5 * yaw)
+        msg.orientation.w = math.cos(0.5 * yaw)
+        # Only yaw is meaningful; roll/pitch are unused in two_d_mode.
+        msg.orientation_covariance[0] = 1e3
+        msg.orientation_covariance[4] = 1e3
+        msg.orientation_covariance[8] = self.imu_yaw_variance
+        # No gyro or accelerometer data in the feedback: -1 = not provided.
+        msg.angular_velocity_covariance[0] = -1.0
+        msg.linear_acceleration_covariance[0] = -1.0
+        self.imu_pub.publish(msg)
 
     def _yaw_radians(self, yaw_value: float) -> float:
         if abs(yaw_value) > 2.0 * math.pi:
