@@ -410,7 +410,8 @@ class WaveRoverDriver(Node):
     def _publish_odom(self):
         now = self.get_clock().now()
         with self.feedback_lock:
-            dist_centre = float(self.dist_centre)
+            # Changed dist_centre on Oct 16
+            dist_centre = 0.5 * (float(self.dist_L) + float(self.dist_R)) # float(self.dist_centre)
             #yaw = self._yaw_radians(float(self.yaw_odom)) # Original
             yaw = float(self.yaw_odom)# Added this
 

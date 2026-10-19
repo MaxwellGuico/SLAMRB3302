@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_typesupport_fastrtps_cpp/yesense_interface/msg/detail/robot_lord__rosidl_typesupport_fastrtps_cpp.hpp

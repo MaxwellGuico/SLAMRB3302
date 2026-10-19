@@ -108,13 +108,13 @@ def generate_launch_description():
                     False, False, False, # Disabled wheel yaw rate
                     False, False, False,
                 ],
-                '''
-                [x,y,z
-                 roll pitch, yaw
-                 vx,vy,vz,
-                 vroll,vpitch,vyaw,
-                 ax,ay,az]
-                '''
+
+                #[x,y,z
+                # roll pitch, yaw
+                # vx,vy,vz,
+                # vroll,vpitch,vyaw,
+                # ax,ay,az]
+
                 'odom0_queue_size': 10,
                 'odom0_differential': False,
                 'odom0_relative': False,

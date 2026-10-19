@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/student_ws/build/planning_astar/ament_cmake_environment_hooks/local_setup.bash

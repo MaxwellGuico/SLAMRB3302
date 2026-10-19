@@ -1,0 +1,9 @@
+.vscode/
+.git-backups/
+*.db
+*.zip
+**/build/
+**/install/
+**/log/
+**/__pycache__/
+*.py[cod]
