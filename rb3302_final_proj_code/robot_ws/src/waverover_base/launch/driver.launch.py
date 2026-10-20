@@ -23,10 +23,11 @@ def generate_launch_description():
                 "load_calib_on_start": True,
                 "rezero_imu_on_start": False,
 
-                # Effective wheel spacing for heading. Measured Oct 20 from a
-                # 90 deg spin (0.549 m wheel difference); the physical spacing
-                # is 0.288 m but skid-steer wheels slip sideways on turns.
-                "wheel_track": 0.349,
+                # Effective wheel spacing for heading. Calibrated Oct 20 from 4
+                # full spins (9.83 m wheel difference over 8*pi rad); the
+                # physical spacing is 0.288 m but skid-steer wheels slip
+                # sideways on turns.
+                "wheel_track": 0.391,
 
                 "feedback_rate": 100.0,
                 "feedback_interval_ms": 10,
