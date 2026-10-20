@@ -119,8 +119,6 @@ def generate_launch_description():
                 'odom0_queue_size': 10,
                 'odom0_differential': False,
                 'odom0_relative': False,
-                'odom0_pose_rejection_threshold': 5.0,
-                'odom0_twist_rejection_threshold': 5.0,
             }],
             remappings=[('odometry/filtered', odom_topic)],
         ),
