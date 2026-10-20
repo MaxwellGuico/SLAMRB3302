@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_cmake/rosidl_cmake_export_typesupport_targets-extras.cmake

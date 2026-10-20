@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/robot_ws/build/yesense_interface/rosidl_typesupport_fastrtps_c/yesense_interface/msg/detail/attitude_min_ahrs__rosidl_typesupport_fastrtps_c.h

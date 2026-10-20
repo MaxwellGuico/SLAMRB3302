@@ -23,7 +23,7 @@ class InitialPoseNavStarter(Node):
         # AMCL only updates when odometry reports motion, so a pose set from
         # RViz never snaps onto the walls while the robot sits still. After
         # each initial pose, force a few scan-matching updates in place.
-        self.declare_parameter('nomotion_updates', 8)
+        self.declare_parameter('nomotion_updates', 20)
         self.nomotion_updates = int(self.get_parameter('nomotion_updates').value)
         self.nomotion_remaining = 0
         self.nomotion_client = self.create_client(

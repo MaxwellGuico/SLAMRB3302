@@ -1,1 +1,0 @@
-/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp/scripts/yaw_diagnostic.py

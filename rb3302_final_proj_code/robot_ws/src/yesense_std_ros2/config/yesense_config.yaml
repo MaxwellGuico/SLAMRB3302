@@ -10,7 +10,7 @@ yesense_pub:
 
         # Conservative measurement noise for robot_localization. The absolute
         # yaw corrects gyro drift slowly; the gyro controls short-term turns.
-        orientation_stddev: 0.20          # rad
+        orientation_stddev: 0.10          # rad # 0.2 og
         angular_velocity_stddev: 0.03     # rad/s
         linear_acceleration_stddev: 0.35  # m/s^2
 

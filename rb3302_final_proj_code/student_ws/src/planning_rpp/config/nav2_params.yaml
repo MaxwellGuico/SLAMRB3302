@@ -9,12 +9,13 @@ amcl:
 
     robot_model_type: nav2_amcl::DifferentialMotionModel
 
-    # Real-robot values from Max's Oct 16 log. Wheel odometry on this
-    # skid-steer base is noisy in rotation, so alpha1 is the largest.
-    alpha1: 0.30   # rotation noise from rotation
-    alpha2: 0.20   # rotation noise from translation
-    alpha3: 0.20   # translation noise from translation
-    alpha4: 0.20   # translation noise from rotation
+
+    # In real life should use 0.2
+    # 0 is completely trust, 1 is dont trust at all
+    alpha1: 0.20 # Change when Rotation Estimate is noisy # changed this
+    alpha2: 0.20 # Change when straight motion introduces heading uncertainty
+    alpha3: 0.30 # Change Translation odom is noisy
+    alpha4: 0.30 # Change when turns introduce translation uncertainty
     alpha5: 0.10
 
     # Odometry now reports spins, so AMCL is triggered by real rotation.
@@ -23,17 +24,17 @@ amcl:
     update_min_a: 0.05
     resample_interval: 1
 
-    min_particles: 300
-    max_particles: 1000
-    max_beams: 60
+    min_particles: 500
+    max_particles: 2000
+    max_beams: 60 # 120 og
 
     laser_model_type: likelihood_field
     laser_likelihood_max_dist: 0.50
     laser_min_range: -1.0
     laser_max_range: -1.0
-    sigma_hit: 0.20
-    z_hit: 0.90
-    z_rand: 0.10
+    sigma_hit: 0.20 # need to investigate Oct 16
+    z_hit: 0.80 # how much to trust map
+    z_rand: 0.20
 
     do_beamskip: false
     tf_broadcast: true
@@ -144,7 +145,7 @@ local_costmap:
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
         enabled: true
-        inflation_radius: 0.22 # 0.3
+        inflation_radius: 0.02 # 0.3
         cost_scaling_factor: 10.0
 
       always_send_full_costmap: true
@@ -195,7 +196,7 @@ global_costmap:
         enabled: true
         # The robot's circumscribed radius is about 0.195 m. A wider decay
         # band gives NavFn a smooth preference for the centre of each aisle.
-        inflation_radius: 0.25 # 0.30
+        inflation_radius: 0.02 # 0.25
         cost_scaling_factor: 10.0
       always_send_full_costmap: true
 
