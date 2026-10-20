@@ -164,8 +164,8 @@ class WaveRoverDriver(Node):
         # "wheels" = heading from (dist_R - dist_L) / wheel_track.
         # "firmware" = old behaviour, heading from the board's yaw_odom.
         self.declare_parameter("odom_yaw_source", "wheels")
-        # Twist variances reported to the EKF. Wheel yaw rate on a skid-steer
-        # base is poor, so the H30 gyro (0.03 rad/s stddev) should dominate.
+        # Twist variances reported to the EKF. Wheel yaw rate is the EKF's
+        # only heading source; AMCL corrects its drift from the laser.
         self.declare_parameter("odom_vx_variance", 0.0025)
         self.declare_parameter("odom_vyaw_variance", 0.04)
         # The board's built-in IMU (yaw_imu in json_feedback, degrees) is

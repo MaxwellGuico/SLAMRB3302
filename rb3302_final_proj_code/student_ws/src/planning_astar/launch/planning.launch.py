@@ -105,13 +105,15 @@ def generate_launch_description():
                 #   x, y, z, roll, pitch, yaw,
                 #   vx, vy, vz, vroll, vpitch, vyaw,
                 #   ax, ay, az
-                # Wheels: forward speed only (signed, so reversing is
-                # backwards). Heading comes from the IMU below.
+                # Wheels: forward speed + yaw rate from
+                # (dist_R - dist_L) / wheel_track. The only heading source:
+                # on Oct 20 the built-in yaw_imu read -22 deg and -164 deg for
+                # 90 deg anticlockwise spins, so it is not fused.
                 'odom0_config': [
                     False, False, False,
                     False, False, False,
                     True,  False, False,
-                    False, False, False,
+                    False, False, True,
                     False, False, False,
                 ],
                 'odom0_queue_size': 10,
@@ -119,22 +121,6 @@ def generate_launch_description():
                 'odom0_relative': False,
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
-                'imu0': imu_topic,
-                # Wave Rover built-in IMU (republished by waverover_driver on
-                # /waverover/imu): absolute yaw only. It has no gyro rate.
-                'imu0_config': [
-                    False, False, False,
-                    False, False, True,
-                    False, False, False,
-                    False, False, False,
-                    False, False, False,
-                ],
-                'imu0_queue_size': 50,
-                'imu0_differential': False,
-                'imu0_relative': False,
-                'imu0_remove_gravitational_acceleration': False,
-                'imu0_pose_rejection_threshold': 5.0,
-                'imu0_twist_rejection_threshold': 5.0,
             }],
             remappings=[('odometry/filtered', odom_topic)],
         ),
