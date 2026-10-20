@@ -66,8 +66,8 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       # Added 061026
-      xy_goal_tolerance: 0.10
-      yaw_goal_tolerance: 0.15
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.05
       stateful: true
     FollowPath:
       plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
@@ -94,7 +94,7 @@ controller_server:
       regulated_linear_scaling_min_speed: 0.12
       allow_reversing: false
       # This was the main reason I found out about the fake odom angular z
-      use_rotate_to_heading: true 
+      use_rotate_to_heading: false 
       # Added 061026
       rotate_to_heading_angular_vel: 0.5
       rotate_to_heading_min_angle: 0.35
