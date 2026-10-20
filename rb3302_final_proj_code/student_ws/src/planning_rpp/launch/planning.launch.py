@@ -76,7 +76,7 @@ def generate_launch_description():
         DeclareLaunchArgument('scan_topic', default_value='/scan'),
         DeclareLaunchArgument('odom_topic', default_value='/odom'),
         DeclareLaunchArgument('raw_odom_topic', default_value='/odom/raw'),
-        DeclareLaunchArgument('imu_topic', default_value='/imu_data_ros'),
+        DeclareLaunchArgument('imu_topic', default_value='/waverover/imu'),
         DeclareLaunchArgument('cmd_vel_topic', default_value='/cmd_vel'),
         DeclareLaunchArgument('set_initial_pose', default_value='false'),
         DeclareLaunchArgument('initial_pose_x', default_value='0.0'),
@@ -101,36 +101,37 @@ def generate_launch_description():
                 'base_link_frame': base_frame,
                 'world_frame': odom_frame,
                 'odom0': raw_odom_topic,
+                # Fused fields, in robot_localization order:
+                #   x, y, z, roll, pitch, yaw,
+                #   vx, vy, vz, vroll, vpitch, vyaw,
+                #   ax, ay, az
+                # Wheels: forward speed only (signed, so reversing is
+                # backwards). Heading comes from the IMU below.
                 'odom0_config': [
                     False, False, False,
-                    False, False, False, # Enabled yaw Added this
-                    True,  False, False, 
-                    False, False, False, # Disabled wheel yaw rate
+                    False, False, False,
+                    True,  False, False,
+                    False, False, False,
                     False, False, False,
                 ],
-
-                #[x,y,z
-                # roll pitch, yaw
-                # vx,vy,vz,
-                # vroll,vpitch,vyaw,
-                # ax,ay,az]
-
                 'odom0_queue_size': 10,
                 'odom0_differential': False,
                 'odom0_relative': False,
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
                 'imu0': imu_topic,
+                # Wave Rover built-in IMU (republished by waverover_driver on
+                # /waverover/imu): absolute yaw only. It has no gyro rate.
                 'imu0_config': [
                     False, False, False,
-                    False, False, True, # absolute yaw disabled
+                    False, False, True,
                     False, False, False,
-                    False, False, False, # Disabled IMU Angular_velocity.z as of 12 Oct
+                    False, False, False,
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,
                 'imu0_differential': False,
-                'imu0_relative': False, # if you want to use the orientation exactly as published by the IMU.
+                'imu0_relative': False,
                 'imu0_remove_gravitational_acceleration': False,
                 'imu0_pose_rejection_threshold': 5.0,
                 'imu0_twist_rejection_threshold': 5.0,
