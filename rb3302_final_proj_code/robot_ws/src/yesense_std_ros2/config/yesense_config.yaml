@@ -6,11 +6,11 @@ yesense_pub:
         driver_type: "ros_serial"
         # Keep the 200 Hz sensor_msgs/Imu stream lightweight. Set true only
         # when the vendor-specific visualization/navigation topics are needed.
-        publish_extended_topics: false
+        publish_extended_topics: true
 
         # Conservative measurement noise for robot_localization. The absolute
         # yaw corrects gyro drift slowly; the gyro controls short-term turns.
-        orientation_stddev: 0.10          # rad # 0.2 og
+        orientation_stddev: 0.2          # rad # 0.2 og
         angular_velocity_stddev: 0.03     # rad/s
         linear_acceleration_stddev: 0.35  # m/s^2
 

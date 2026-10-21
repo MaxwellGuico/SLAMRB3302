@@ -136,7 +136,7 @@ class YESENSE_Publisher : public rclcpp::Node
 		this->declare_parameter<int>("baud_rate", 460800);
 		this->declare_parameter<std::string>("frame_id", "basic_id");
 		this->declare_parameter<std::string>("driver_type", "ros_serial");
-		this->declare_parameter<bool>("publish_extended_topics", false);
+		this->declare_parameter<bool>("publish_extended_topics", true);
 		this->declare_parameter<double>("orientation_stddev", 0.20);
 		this->declare_parameter<double>("angular_velocity_stddev", 0.03);
 		this->declare_parameter<double>("linear_acceleration_stddev", 0.35);
@@ -305,7 +305,7 @@ class YESENSE_Publisher : public rclcpp::Node
 	int baud_rate;
 	std::string frame_id;	
 	int driver_type;	// 选择使用ROS串口驱动或是linux原生驱动
-	bool publish_extended_topics = false;
+	bool publish_extended_topics = true;
 	double orientation_stddev = 0.20;
 	double angular_velocity_stddev = 0.03;
 	double linear_acceleration_stddev = 0.35;

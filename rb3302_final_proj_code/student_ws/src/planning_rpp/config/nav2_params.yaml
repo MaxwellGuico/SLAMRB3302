@@ -18,9 +18,10 @@ amcl:
     alpha4: 0.30 # Change when turns introduce translation uncertainty
     alpha5: 0.10
 
-    # Update more frequently in the small 0.60 m cells.
+    # Odometry now reports spins, so AMCL is triggered by real rotation.
+    # 0.01 rad made it re-correct the heading on every tiny twitch.
     update_min_d: 0.05
-    update_min_a: 0.01 # og 0.05 # Heading Corrections appear to frequently # need to investigate Oct 16
+    update_min_a: 0.05
     resample_interval: 1
 
     min_particles: 500
