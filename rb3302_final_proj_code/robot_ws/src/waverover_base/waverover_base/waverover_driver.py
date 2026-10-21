@@ -163,9 +163,9 @@ class WaveRoverDriver(Node):
         self.declare_parameter("wheel_dist_scale", 1.0)
         # "wheels" = heading from (dist_R - dist_L) / wheel_track.
         # "firmware" = old behaviour, heading from the board's yaw_odom.
-        self.declare_parameter("odom_yaw_source", "wheels")
-        # Twist variances reported to the EKF. Wheel yaw rate on a skid-steer
-        # base is poor, so the H30 gyro (0.03 rad/s stddev) should dominate.
+        self.declare_parameter("odom_yaw_source", "firmware")
+        # Twist variances reported to the EKF. Wheel yaw rate is the EKF's
+        # only heading source; AMCL corrects its drift from the laser.
         self.declare_parameter("odom_vx_variance", 0.0025)
         self.declare_parameter("odom_vyaw_variance", 0.04)
         # The board's built-in IMU (yaw_imu in json_feedback, degrees) is
@@ -280,7 +280,7 @@ class WaveRoverDriver(Node):
         self.battery_pub = self.create_publisher(BatteryState, "battery", 10)
         self.battery_percentage_pub = self.create_publisher(Float32, "battery_percentage", 10)
         self.odom_pub = self.create_publisher(Odometry, self.odom_topic, 10)
-        self.imu_pub = self.create_publisher(Imu, self.imu_topic, 10)
+        self.imu_pub = self.create_publisher(Imu, "waverover/imu", 10)
         self.tf_broadcaster = TransformBroadcaster(self)
 
         self.create_timer(1.0 / self.heartbeat_rate, self._heartbeat_callback)
@@ -310,10 +310,10 @@ class WaveRoverDriver(Node):
             time.sleep(0.2)
         # Added this
         # Had to disable this as it was giving movement commands for some reason during startup
-        '''
+        # Actually i believe this helps to initialise the yesense
         self.transport.send_cmd({"T": 151})
         time.sleep(0.2)
-        '''
+        
         self.transport.send_cmd({"T": 136, "cmd": self.heartbeat_delay_ms})
         time.sleep(0.1)
         

@@ -76,7 +76,7 @@ def generate_launch_description():
         DeclareLaunchArgument('scan_topic', default_value='/scan'),
         DeclareLaunchArgument('odom_topic', default_value='/odom'),
         DeclareLaunchArgument('raw_odom_topic', default_value='/odom/raw'),
-        DeclareLaunchArgument('imu_topic', default_value='/waverover/imu'),
+        DeclareLaunchArgument('imu_topic', default_value='/imu_data_ros'),
         DeclareLaunchArgument('cmd_vel_topic', default_value='/cmd_vel'),
         DeclareLaunchArgument('set_initial_pose', default_value='false'),
         DeclareLaunchArgument('initial_pose_x', default_value='0.0'),
@@ -102,9 +102,11 @@ def generate_launch_description():
                 'world_frame': odom_frame,
                 'odom0': raw_odom_topic,
                 # Fused fields, in robot_localization order:
-                #   x, y, z, roll, pitch, yaw,
-                #   vx, vy, vz, vroll, vpitch, vyaw,
-                #   ax, ay, az
+                #  x, y, z, 
+                #  roll, pitch, yaw,
+                #  vx, vy, vz, 
+                #  vroll, vpitch, vyaw,
+                #  ax, ay, az
                 # Wheels: forward speed only (signed, so reversing is
                 # backwards). Heading comes from the IMU below.
                 'odom0_config': [
@@ -126,7 +128,7 @@ def generate_launch_description():
                     False, False, False,
                     False, False, True,
                     False, False, False,
-                    False, False, False,
+                    False, False, True,
                     False, False, False,
                 ],
                 'imu0_queue_size': 50,
@@ -204,7 +206,7 @@ def generate_launch_description():
             parameters=[configured_params],
             remappings=[
                 ('cmd_vel', 'cmd_vel_nav_raw'),
-                ('cmd_vel_smoothed', cmd_vel_topic),
+                ('cmd_vel_smoothed', cmd_vel_topic) #('cmd_vel_smoothed', 'cmd_vel_smoother_test')
             ],
         ),
         Node(
@@ -220,7 +222,7 @@ def generate_launch_description():
             name='behavior_server',
             output='screen',
             parameters=[configured_params],
-            remappings=[('cmd_vel', cmd_vel_topic)],
+            remappings=[('cmd_vel', 'cmd_vel_recovery')], # remappings=[('cmd_vel', cmd_vel_topic)],
         ),
         Node(
             package='nav2_bt_navigator',
