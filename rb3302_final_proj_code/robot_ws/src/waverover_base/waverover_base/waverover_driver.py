@@ -159,7 +159,7 @@ class WaveRoverDriver(Node):
         self.declare_parameter("base_frame", "base_link")
         # Odometry is rebuilt from the signed per-wheel distances (see
         # wheel_odometry.py). wheel_track must be calibrated on the robot.
-        self.declare_parameter("wheel_track", 0.288)
+        self.declare_parameter("wheel_track", 0.125)
         self.declare_parameter("wheel_dist_scale", 1.0)
         # "wheels" = heading from (dist_R - dist_L) / wheel_track.
         # "firmware" = old behaviour, heading from the board's yaw_odom.

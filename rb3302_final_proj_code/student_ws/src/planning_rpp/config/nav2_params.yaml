@@ -70,14 +70,24 @@ controller_server:
       yaw_goal_tolerance: 3.14 # 28.6 degree heading error
       stateful: true
     FollowPath:
-      plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+      plugin: nav2_rotation_shim_controller::RotationShimController
+      primary_controller: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController # plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+      # Shim Controller Params
+      angular_dist_threshold: 0.785
+      angular_disengage_threshold: 0.20
+      forward_sampling_distance: 0.25
+
+      simulate_ahead_time: 1.0
+      rotate_to_heading_once: true
+      rotate_to_goal_heading: false
+      
       # Conservative values for the 0.60 m grid and tight right-angle turns.
       desired_linear_vel: 0.15
       lookahead_dist: 0.25
       min_lookahead_dist: 0.10
       max_lookahead_dist: 0.30
       lookahead_time: 1.5
-      rotate_to_heading_angular_vel: 0.5
+      rotate_to_heading_angular_vel: 0.4 # OG 0.5
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false # CHANGED
       min_approach_linear_velocity: 0.05
@@ -92,13 +102,14 @@ controller_server:
       inflation_cost_scaling_factor: 10.0
       regulated_linear_scaling_min_radius: 0.9
       regulated_linear_scaling_min_speed: 0.12
-      allow_reversing: true
+      allow_reversing: false # it doesnt really work that well
       # This was the main reason I found out about the fake odom angular z
       use_rotate_to_heading: false 
       # Added 061026
       rotate_to_heading_angular_vel: 0.5
+
       rotate_to_heading_min_angle: 0.785 # 0.35 
-      max_angular_accel: 1.0 # 0.8
+      max_angular_accel: 4.0 # 2.0
       stateful: true
 
 local_costmap:
@@ -145,7 +156,7 @@ local_costmap:
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
         enabled: true
-        inflation_radius: 0.20 # 60cm minus 17cm of robot dimension divide it by 2 = 20cm
+        inflation_radius: 0.30 # 60cm minus 17cm of robot dimension divide it by 2 = 20cm
         cost_scaling_factor: 10.0 # og is 10
 
       always_send_full_costmap: true
@@ -196,7 +207,7 @@ global_costmap:
         enabled: true
         # The robot's circumscribed radius is about 0.195 m. A wider decay
         # band gives NavFn a smooth preference for the centre of each aisle.
-        inflation_radius: 0.20 # 0.25
+        inflation_radius: 0.30 # 0.25
         cost_scaling_factor: 10.0
       always_send_full_costmap: true
 
@@ -231,16 +242,15 @@ behavior_server:
     global_costmap_topic: global_costmap/costmap_raw
     local_footprint_topic: local_costmap/published_footprint
     global_footprint_topic: global_costmap/published_footprint
-    behavior_plugins: ["spin"] # behavior_plugins: ["spin", "backup", "drive_on_heading", "wait"]
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait"]
     spin:
       plugin: nav2_behaviors::Spin
-    
-    #backup:
-    #  plugin: nav2_behaviors::BackUp
-    #drive_on_heading:
-    #  plugin: nav2_behaviors::DriveOnHeading
-    #wait:
-    #  plugin: nav2_behaviors::Wait
+    backup:
+      plugin: nav2_behaviors::BackUp
+    drive_on_heading:
+      plugin: nav2_behaviors::DriveOnHeading
+    wait:
+      plugin: nav2_behaviors::Wait
     local_frame: odom
     global_frame: map
     robot_base_frame: base_link

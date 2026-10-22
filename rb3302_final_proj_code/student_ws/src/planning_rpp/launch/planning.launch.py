@@ -112,7 +112,7 @@ def generate_launch_description():
                 'odom0_config': [
                     False, False, False,
                     False, False, False,
-                    True,  False, False,
+                    True,  True, False, # Enabled both Vx, Vy
                     False, False, False,
                     False, False, False,
                 ],
