@@ -12,6 +12,7 @@ install(
   PROGRAMS 
     scripts/initial_pose_nav_starter.py
     scripts/yaw_diagnostic.py
+    scripts/letter_waypoint.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -222,7 +222,7 @@ def generate_launch_description():
             name='behavior_server',
             output='screen',
             parameters=[configured_params],
-            remappings=[('cmd_vel', 'cmd_vel_recovery')], # remappings=[('cmd_vel', cmd_vel_topic)],
+            remappings=[('cmd_vel', cmd_vel_topic)], # remappings=[('cmd_vel', 'cmd_vel_recovery')], 
         ),
         Node(
             package='nav2_bt_navigator',

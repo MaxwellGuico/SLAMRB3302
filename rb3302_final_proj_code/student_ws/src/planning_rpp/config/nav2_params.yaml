@@ -42,6 +42,7 @@ amcl:
 
 bt_navigator:
   ros__parameters:
+    default_nav_to_pose_bt_xml: "/home/ubuntu/rb3302_final_proj_code/student_ws/src/planning_rpp/config/no_global_clear.xml" # testing replanning without clearing global costmap so it remembers that there is an obstacle
     use_sim_time: false
     global_frame: map
     robot_base_frame: base_link
@@ -66,7 +67,7 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       # Added 061026
-      xy_goal_tolerance: 0.15
+      xy_goal_tolerance: 0.05 # orignally was 0.15
       yaw_goal_tolerance: 3.14 # 28.6 degree heading error
       stateful: true
     FollowPath:
@@ -192,7 +193,7 @@ global_costmap:
         scan:
           topic: /scan
           data_type: LaserScan
-          clearing: true
+          clearing: true # true originally temporaryx
           marking: true
           min_obstacle_height: 0.0
           max_obstacle_height: 0.5
