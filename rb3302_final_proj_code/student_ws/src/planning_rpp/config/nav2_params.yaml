@@ -67,7 +67,7 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       # Added 061026
-      xy_goal_tolerance: 0.10 # 0.05 untested and tighter than AMCL noise; orignally was 0.15
+      xy_goal_tolerance: 0.05 # orignally was 0.15
       yaw_goal_tolerance: 3.14 # 28.6 degree heading error
       stateful: true
     FollowPath:
@@ -83,12 +83,12 @@ controller_server:
       rotate_to_goal_heading: false
       
       # Conservative values for the 0.60 m grid and tight right-angle turns.
-      desired_linear_vel: 0.15
+      desired_linear_vel: 0.25 # vv safe is 0.15
       lookahead_dist: 0.25
       min_lookahead_dist: 0.10
       max_lookahead_dist: 0.30
       lookahead_time: 1.5
-      rotate_to_heading_angular_vel: 0.4 # OG 0.5
+      rotate_to_heading_angular_vel: 1.5 # # Changed to 1.5
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false # CHANGED
       min_approach_linear_velocity: 0.05
@@ -106,11 +106,8 @@ controller_server:
       allow_reversing: false # it doesnt really work that well
       # This was the main reason I found out about the fake odom angular z
       use_rotate_to_heading: false 
-      # Added 061026
-      rotate_to_heading_angular_vel: 0.5
-
       rotate_to_heading_min_angle: 0.785 # 0.35 
-      max_angular_accel: 4.0 # 2.0
+      max_angular_accel: 12.0 # 2.0
       stateful: true
 
 local_costmap:
@@ -149,10 +146,10 @@ local_costmap:
           min_obstacle_height: 0.0
           max_obstacle_height: 0.5
           obstacle_min_range: 0.05
-          obstacle_max_range: 2.5
+          obstacle_max_range: 1.5 # was 2.5 changed to 1.5
           raytrace_min_range: 0.0
           raytrace_max_range: 3.0
-          inf_is_valid: true
+          inf_is_valid: false # was true
 
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
@@ -193,19 +190,15 @@ global_costmap:
         scan:
           topic: /scan
           data_type: LaserScan
-          # Remember obstacles for the whole run. With clearing on, beams
-          # through gaps in an obstacle erased it, so the 1 Hz replan went
-          # straight back into it. Local costmap still clears normally.
-          clearing: false
+          clearing: false # true originally temporaryx | I changed to false to check
           marking: true
           min_obstacle_height: 0.0
           max_obstacle_height: 0.5
           obstacle_min_range: 0.05
-          # Marks are permanent, so only mark from close, accurate beams.
-          obstacle_max_range: 1.5 # was 2.5
+          obstacle_max_range: 2.5
           raytrace_min_range: 0.0
           raytrace_max_range: 3.0
-          inf_is_valid: false # was true; no-return beams cleared obstacles
+          inf_is_valid: true
 
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
@@ -265,10 +258,10 @@ velocity_smoother:
     use_sim_time: false
     smoothing_frequency: 20.0
     feedback: OPEN_LOOP
-    max_velocity: [0.5, 0.0, 1.0]
-    min_velocity: [-0.5, 0.0, -1.0]
-    max_accel: [0.5, 0.0, 0.5]
-    max_decel: [-0.5, 0.0, -0.5]
+    max_velocity: [0.5, 0.0, 1.50] # Changed to 1.5
+    min_velocity: [-0.5, 0.0, -1.50] # Changed to 1.5
+    max_accel: [0.5, 0.0, 1.5] # Changed to 1.5
+    max_decel: [-0.5, 0.0, -1.5] # Changed to 1.5
     odom_topic: /odom
     enable_stamped_cmd_vel: false
 

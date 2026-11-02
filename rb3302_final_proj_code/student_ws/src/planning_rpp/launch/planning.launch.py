@@ -92,7 +92,7 @@ def generate_launch_description():
                 'frequency': 50.0,
                 'sensor_timeout': 0.30,
                 'two_d_mode': True,
-                'transform_timeout': 0.10,
+                'transform_timeout': 0.0,
                 'print_diagnostics': True,
                 'publish_tf': True,
                 'publish_acceleration': False,
