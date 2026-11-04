@@ -89,11 +89,11 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 'use_sim_time': use_sim_time,
-                'frequency': 50.0,
+                'frequency': 50.0, # og 50
                 'sensor_timeout': 0.30,
                 'two_d_mode': True,
                 'transform_timeout': 0.0,
-                'print_diagnostics': True,
+                'print_diagnostics': False, # was True
                 'publish_tf': True,
                 'publish_acceleration': False,
                 'map_frame': map_frame,
@@ -131,7 +131,7 @@ def generate_launch_description():
                     False, False, True,
                     False, False, False,
                 ],
-                'imu0_queue_size': 50,
+                'imu0_queue_size': 50, # og 50
                 'imu0_differential': False,
                 'imu0_relative': False,
                 'imu0_remove_gravitational_acceleration': False,

@@ -191,7 +191,7 @@ global_costmap:
         scan:
           topic: /scan
           data_type: LaserScan
-          clearing: false # true originally temporary | I changed to false to check
+          clearing: true # true originally temporary | I changed to false to check
           marking: true
           min_obstacle_height: 0.0
           max_obstacle_height: 0.5
