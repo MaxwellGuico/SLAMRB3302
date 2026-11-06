@@ -74,14 +74,12 @@ controller_server:
       plugin: nav2_rotation_shim_controller::RotationShimController
       primary_controller: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController # plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
       # Shim Controller Params
-      angular_dist_threshold: 0.35 # was 0.785; re-align if >20 deg off so RPP never drives off badly misaligned
+      angular_dist_threshold: 0.785
       angular_disengage_threshold: 0.20
       forward_sampling_distance: 0.25
 
       simulate_ahead_time: 1.0
-      # false: re-check alignment on every new path, so after a replan the
-      # shim turns toward the detour before RPP drives forward. (was true)
-      rotate_to_heading_once: false
+      rotate_to_heading_once: true
       rotate_to_goal_heading: false
       
       # Conservative values for the 0.60 m grid and tight right-angle turns.
@@ -90,7 +88,7 @@ controller_server:
       min_lookahead_dist: 0.10
       max_lookahead_dist: 0.30
       lookahead_time: 1.5
-      rotate_to_heading_angular_vel: 1.5 # back to 1.5
+      rotate_to_heading_angular_vel: 1.5 # # Changed to 1.5
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false # CHANGED
       min_approach_linear_velocity: 0.05
@@ -109,7 +107,7 @@ controller_server:
       # This was the main reason I found out about the fake odom angular z
       use_rotate_to_heading: false 
       rotate_to_heading_min_angle: 0.785 # 0.35 
-      max_angular_accel: 3.0 # must equal velocity_smoother angular accel/decel or the shim overshoots
+      max_angular_accel: 12.0 # 2.0
       stateful: true
       closed_loop: true
 
@@ -263,8 +261,8 @@ velocity_smoother:
     feedback: OPEN_LOOP
     max_velocity: [0.5, 0.0, 1.50] # Changed to 1.5
     min_velocity: [-0.5, 0.0, -1.50] # Changed to 1.5
-    max_accel: [0.5, 0.0, 3.0] # angular must equal FollowPath.max_angular_accel
-    max_decel: [-0.5, 0.0, -3.0] # angular must equal FollowPath.max_angular_accel
+    max_accel: [0.5, 0.0, 1.5] # Changed to 1.5
+    max_decel: [-0.5, 0.0, -1.5] # Changed to 1.5
     odom_topic: /odom
     enable_stamped_cmd_vel: false
 
