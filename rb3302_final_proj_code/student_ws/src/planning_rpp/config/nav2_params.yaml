@@ -74,7 +74,7 @@ controller_server:
       plugin: nav2_rotation_shim_controller::RotationShimController
       primary_controller: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController # plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
       # Shim Controller Params
-      angular_dist_threshold: 0.785
+      angular_dist_threshold: 0.35 # was 0.785; re-align if >20 deg off so RPP never drives off badly misaligned
       angular_disengage_threshold: 0.20
       forward_sampling_distance: 0.25
 
@@ -90,7 +90,7 @@ controller_server:
       min_lookahead_dist: 0.10
       max_lookahead_dist: 0.30
       lookahead_time: 1.5
-      rotate_to_heading_angular_vel: 1.5 # # Changed to 1.5
+      rotate_to_heading_angular_vel: 1.0 # was 1.5; less spin to wind down
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false # CHANGED
       min_approach_linear_velocity: 0.05
@@ -109,7 +109,7 @@ controller_server:
       # This was the main reason I found out about the fake odom angular z
       use_rotate_to_heading: false 
       rotate_to_heading_min_angle: 0.785 # 0.35 
-      max_angular_accel: 12.0 # 2.0
+      max_angular_accel: 1.5 # was 12.0; must match velocity_smoother angular decel or the shim overshoots
       stateful: true
       closed_loop: true
 
