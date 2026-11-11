@@ -102,7 +102,7 @@ controller_server:
       # Must agree with the local inflation layer below.
       cost_scaling_dist: 0.18 # Originally was 0.25
       cost_scaling_gain: 0.5
-      inflation_cost_scaling_factor: 10.0
+      inflation_cost_scaling_factor: 3.0 # 10.0
       regulated_linear_scaling_min_radius: 0.9
       regulated_linear_scaling_min_speed: 0.12
       allow_reversing: false # it doesnt really work that well
