@@ -15,6 +15,7 @@ def generate_launch_description():
                 "heartbeat_rate": 20.0,
                 "max_linear_vel": 0.8,
                 "max_angular_vel": 3.0,
+                "angular_command_gain": 3.0,
                 "publish_odom": True,
                 "publish_odom_tf": False,
                 "odom_topic": "/odom/raw",

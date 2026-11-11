@@ -147,6 +147,7 @@ class WaveRoverDriver(Node):
         self.declare_parameter("serial_timeout", 1.0)
         self.declare_parameter("max_linear_vel", 1.0)
         self.declare_parameter("max_angular_vel", 2.0)
+        self.declare_parameter("angular_command_gain", 1.0)
         self.declare_parameter("cmd_vel_timeout", 0.8)
         self.declare_parameter("heartbeat_rate", 20.0)
         self.declare_parameter("load_calib_on_start", True)
@@ -195,6 +196,11 @@ class WaveRoverDriver(Node):
         self.serial_timeout = self.get_parameter("serial_timeout").value
         self.max_linear_vel = self.get_parameter("max_linear_vel").value
         self.max_angular_vel = self.get_parameter("max_angular_vel").value
+        self.angular_command_gain = float(
+            self.get_parameter("angular_command_gain").value
+        )
+        if not math.isfinite(self.angular_command_gain) or self.angular_command_gain <= 0:
+            raise ValueError("angular_command_gain must be positive and finite")
         self.cmd_vel_timeout = self.get_parameter("cmd_vel_timeout").value
         self.heartbeat_rate = self.get_parameter("heartbeat_rate").value
         self.load_calib_on_start = self.get_parameter("load_calib_on_start").value
@@ -348,7 +354,18 @@ class WaveRoverDriver(Node):
         self._send_velocity(self.current_linear, self.current_angular)
 
     def _send_velocity(self, linear: float, angular: float):
-        self.transport.write_json({"T": 13, "X": round(linear, 4), "Z": round(angular, 4)})
+        # Scale only the outgoing motor command, then enforce the output limit.
+        angular_out = angular * self.angular_command_gain
+        angular_out = max(
+            -self.max_angular_vel,
+            min(self.max_angular_vel, angular_out),
+        )
+
+        self.transport.write_json({
+            "T": 13,
+            "X": round(linear, 4),
+            "Z": round(angular_out, 4),
+        })
 
     def _serial_reader_loop(self):
         while self.running:
