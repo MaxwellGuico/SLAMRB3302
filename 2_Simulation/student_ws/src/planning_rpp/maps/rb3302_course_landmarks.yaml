@@ -1,0 +1,102 @@
+# Idealized landmark centres from L08b_Project-2.
+# Frame convention: origin at the nominal south-west corner; +x east; +y north.
+cell_size: 0.60
+course_width: 3.60
+course_height: 2.40
+landmarks:
+  A:
+    x: 0.30
+    y: 2.10
+    yaw: 0.0
+  B:
+    x: 0.90
+    y: 2.10
+    yaw: 0.0
+  C:
+    x: 1.50
+    y: 2.10
+    yaw: 0.0
+  D:
+    x: 2.10
+    y: 2.10
+    yaw: 0.0
+  E:
+    x: 2.70
+    y: 2.10
+    yaw: 0.0
+  F:
+    x: 3.30
+    y: 2.10
+    yaw: 0.0
+  G:
+    x: 0.30
+    y: 1.50
+    yaw: 0.0
+  H:
+    x: 0.90
+    y: 1.50
+    yaw: 0.0
+  I:
+    x: 1.50
+    y: 1.50
+    yaw: 0.0
+  J:
+    x: 2.10
+    y: 1.50
+    yaw: 0.0
+  K:
+    x: 2.70
+    y: 1.50
+    yaw: 0.0
+  L:
+    x: 3.30
+    y: 1.50
+    yaw: 0.0
+  M:
+    x: 0.30
+    y: 0.90
+    yaw: 0.0
+  N:
+    x: 0.90
+    y: 0.90
+    yaw: 0.0
+  O:
+    x: 1.50
+    y: 0.90
+    yaw: 0.0
+  P:
+    x: 2.10
+    y: 0.90
+    yaw: 0.0
+  Q:
+    x: 2.70
+    y: 0.90
+    yaw: 0.0
+  R:
+    x: 3.30
+    y: 0.90
+    yaw: 0.0
+  S:
+    x: 0.30
+    y: 0.30
+    yaw: 0.0
+  T:
+    x: 0.90
+    y: 0.30
+    yaw: 0.0
+  U:
+    x: 1.50
+    y: 0.30
+    yaw: 0.0
+  V:
+    x: 2.10
+    y: 0.30
+    yaw: 0.0
+  W:
+    x: 2.70
+    y: 0.30
+    yaw: 0.0
+  X:
+    x: 3.30
+    y: 0.30
+    yaw: 0.0

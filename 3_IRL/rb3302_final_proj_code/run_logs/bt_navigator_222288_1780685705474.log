@@ -1,0 +1,24 @@
+[INFO] [1780685705.821356339] [bt_navigator]: 
+	bt_navigator lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1780685705.830988527] [bt_navigator]: Creating
+[INFO] [1780685706.764065766] [bt_navigator]: Configuring
+[INFO] [1780685706.777675714] [bt_navigator]: Creating navigator id navigate_to_pose of type nav2_bt_navigator::NavigateToPoseNavigator
+[WARN] [1780685706.784594255] [bt_navigator]: Error_code parameters were not set. Using default values of: follow_path_error_code compute_path_error_code
+Make sure these match your BT and there are not other sources of error codes youreported to your application
+[INFO] [1780685706.912251130] [bt_navigator]: Creating navigator id navigate_through_poses of type nav2_bt_navigator::NavigateThroughPosesNavigator
+[INFO] [1780685725.028183259] [bt_navigator]: Activating
+[INFO] [1780685725.213408623] [bt_navigator]: Creating bond (bt_navigator) to lifecycle manager.
+[INFO] [1780685743.850403616] [bt_navigator]: Begin navigating from current location (0.09, -0.03) to (0.46, 0.09)
+[INFO] [1780685761.768927568] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [1780685761.769176474] [bt_navigator]: Running Nav2 LifecycleNode rcl preshutdown (bt_navigator)
+[INFO] [1780685761.769639286] [bt_navigator]: Deactivating
+[WARN] [1780685761.769700432] [bt_navigator]: [navigate_to_pose] [ActionServer] Requested to deactivate server but goal is still executing. Should check if action server is running before deactivating.
+[WARN] [1780685761.792765484] [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+[INFO] [1780685761.793236161] [bt_navigator]: Goal canceled
+[WARN] [1780685761.793294338] [bt_navigator]: [navigate_to_pose] [ActionServer] Stopping the thread per request.
+[INFO] [1780685761.793660016] [bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.
+[INFO] [1780685761.858253505] [bt_navigator]: Cleaning up
+[INFO] [1780685762.380622359] [bt_navigator]: Completed Cleaning up
+[INFO] [1780685762.380700484] [bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.

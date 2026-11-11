@@ -1,0 +1,66 @@
+sensor_realism:
+  ros__parameters:
+    # Keep this true for normal simulation.  Setting it false preserves the
+    # same topic graph but passes Gazebo's ideal measurements through.
+    enabled: true
+    random_seed: 3302
+
+    ideal_odom_topic: /sim/odom/ideal
+    output_odom_topic: /odom/raw
+    ideal_imu_topic: /sim/imu/ideal
+    output_imu_topic: /imu_data_ros
+
+    # WAVE ROVER feedback is nominally 100 Hz.  USB/serial delivery is neither
+    # instantaneous nor perfectly periodic, and an occasional frame is lost.
+    odom_latency_ms: 18.0
+    odom_latency_jitter_ms: 5.0
+    odom_dropout_probability: 0.002
+
+    # Encoder/firmware odometry.  A small wheel-size error affects distance;
+    # differential wheel mismatch bends long straight runs.  During skid turns
+    # the effective track width changes, hence angular scale and turn-slip
+    # uncertainty are substantially larger than straight-line encoder noise.
+    odom_linear_scale: 1.012
+    odom_angular_scale: 0.94
+    odom_wheel_mismatch_rad_per_m: 0.012
+    odom_distance_noise_m_per_sqrt_m: 0.004
+    odom_turn_slip_stddev_fraction: 0.045
+    odom_distance_quantization_m: 0.0005
+    odom_yaw_quantization_rad: 0.0015
+    odom_linear_velocity_noise_stddev: 0.015
+    odom_angular_velocity_noise_stddev: 0.035
+
+    # Pose uncertainty grows with travel and turning.  Twist values describe
+    # the per-sample observation covariance consumed by robot_localization.
+    odom_position_stddev: 0.025
+    odom_position_drift_stddev_per_m: 0.018
+    odom_yaw_stddev: 0.08
+    odom_yaw_drift_stddev_per_rad: 0.06
+    odom_linear_velocity_stddev: 0.03
+    odom_angular_velocity_stddev: 0.10
+
+    # Latest H30 settings declare 0.10 rad, 0.03 rad/s and 0.35 m/s^2.
+    # Add a run-specific turn-rate bias plus a slow random walk so repeated
+    # trajectories do not receive a perfect, stationary heading reference.
+    imu_latency_ms: 7.0
+    imu_latency_jitter_ms: 2.0
+    imu_dropout_probability: 0.001
+    imu_orientation_noise_stddev: 0.012
+    imu_orientation_stddev: 0.10
+    # gyro_link is the roll-pi FRD sensor frame. Gazebo's attitude yaw thus
+    # changes opposite to base_link; publish the robot-heading sign expected
+    # by the IRL EKF configuration.
+    imu_invert_yaw: true
+    # The H30 attitude is internally fused, so use a small heading bias and
+    # slow walk independent of the raw gyro-rate bias below.
+    imu_orientation_bias_stddev: 0.025
+    imu_orientation_bias_random_walk: 0.0003
+    imu_gyro_noise_stddev: 0.03
+    imu_gyro_bias_stddev: 0.010
+    imu_gyro_bias_random_walk: 0.0008
+    imu_accel_noise_stddev: 0.12
+    imu_accel_bias_stddev: 0.08
+    imu_accel_bias_random_walk: 0.006
+    imu_accel_stddev: 0.35
+
+    release_rate_hz: 500.0

@@ -1,0 +1,25 @@
+[INFO] [1780679062.282691686] [map_server]: 
+	map_server lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1780679062.282900748] [map_server]: Creating
+[INFO] [1780679062.287407207] [map_server]: Configuring
+[INFO] [1780679062.287537259] [map_io]: Loading yaml file: /home/ubuntu/rb3302_final_proj_code/student_ws/maps/rb3302_map.yaml
+[INFO] [1780679062.288251477] [map_io]: resolution: 0.05
+[INFO] [1780679062.288285175] [map_io]: origin[0]: -1.25
+[INFO] [1780679062.288290852] [map_io]: origin[1]: -2.85
+[INFO] [1780679062.288294967] [map_io]: origin[2]: 0
+[INFO] [1780679062.288299550] [map_io]: free_thresh: 0.196
+[INFO] [1780679062.288303457] [map_io]: occupied_thresh: 0.65
+[INFO] [1780679062.288309394] [map_io]: mode: trinary
+[INFO] [1780679062.288315123] [map_io]: negate: 0
+[INFO] [1780679062.288665436] [map_io]: Loading image_file: /home/ubuntu/rb3302_final_proj_code/student_ws/maps/rb3302_map.pgm
+[INFO] [1780679062.289195644] [map_io]: Read map /home/ubuntu/rb3302_final_proj_code/student_ws/maps/rb3302_map.pgm: 108 X 87 map @ 0.05 m/cell
+[INFO] [1780679062.361087102] [map_server]: Activating
+[INFO] [1780679062.361313821] [map_server]: Creating bond (map_server) to lifecycle manager.
+[INFO] [1780679095.069637507] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [1780679095.069837923] [map_server]: Running Nav2 LifecycleNode rcl preshutdown (map_server)
+[INFO] [1780679095.069957298] [map_server]: Deactivating
+[INFO] [1780679095.070000944] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[INFO] [1780679095.121031361] [map_server]: Cleaning up
+[INFO] [1780679095.121178548] [map_server]: Destroying bond (map_server) to lifecycle manager.
