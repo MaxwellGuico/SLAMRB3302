@@ -38,9 +38,10 @@
   <xacro:property name="lidar_radius" value="0.035"/>
   <xacro:property name="lidar_height" value="0.04"/>
   <!-- Measured sensor geometry. H30 is 50 mm above base origin. The LiDAR
-       is 52 mm behind and 40 mm above the H30. -->
+       is 52 mm in front of and 40 mm above the H30. -->
   <xacro:property name="imu_mount_z" value="0.050"/>
-  <!-- ram said its supposed to be positive 0.052, havent tried-->
+  <!-- Was -0.052 (sign error, shifted every scan by 10.4 cm). Corrected to
+       +0.052 and confirmed on the robot on 11 Nov 2026. -->
   <xacro:property name="lidar_from_imu_x" value="0.052"/>
   <!-- gyro_link has down-positive Z because the H30 is installed FRD. -->
   <xacro:property name="lidar_from_imu_z" value="-0.040"/>

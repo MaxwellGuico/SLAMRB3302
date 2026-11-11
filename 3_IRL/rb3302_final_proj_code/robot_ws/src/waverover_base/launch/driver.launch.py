@@ -26,7 +26,7 @@ def generate_launch_description():
 
                 # Effective wheel spacing for heading. Measured Oct 20 from a
                 # 90 deg spin (0.549 m wheel difference); the physical spacing
-                # is 0.288 m but skid-steer wheels slip sideways on turns.
+                # is 0.125 m but skid-steer wheels slip sideways on turns.
                 "wheel_track": 0.391,
 
                 "feedback_rate": 100.0,
