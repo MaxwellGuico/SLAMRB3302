@@ -193,7 +193,6 @@ def make_recorder(labels: Sequence[str], map_profile: str, action_name: str,
                     if entry.status in STATUS_NAMES or len(self._goal_index) >= len(self.labels):
                         continue
                     self._goal_index[uuid] = len(self._goal_index)
-                    self._last_done = None  # a goal is running: not idle
                     if not self.started:
                         self.started_at = time.monotonic()
                         self.get_logger().info('Mission started.')
