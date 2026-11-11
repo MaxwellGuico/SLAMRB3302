@@ -67,7 +67,7 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       # Added 061026
-      xy_goal_tolerance: 0.02 # orignally was 0.15
+      xy_goal_tolerance: 0.05 # orignally was 0.05
       yaw_goal_tolerance: 3.14 # 28.6 degree heading error
       stateful: true
     FollowPath:
@@ -75,7 +75,7 @@ controller_server:
       primary_controller: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController # plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
       # Shim Controller Params
       angular_dist_threshold: 0.785
-      angular_disengage_threshold: 0.20
+      angular_disengage_threshold: 0.10 # 0.20
       forward_sampling_distance: 0.25
 
       simulate_ahead_time: 1.0
@@ -85,7 +85,7 @@ controller_server:
       rotate_to_goal_heading: false
       
       # Conservative values for the 0.60 m grid and tight right-angle turns.
-      desired_linear_vel: 0.25 # vv safe is 0.15
+      desired_linear_vel: 0.30 # vv safe is 0.25
       lookahead_dist: 0.25
       min_lookahead_dist: 0.10
       max_lookahead_dist: 0.30
@@ -93,7 +93,7 @@ controller_server:
       rotate_to_heading_angular_vel: 0.6 # Changed from 1.5
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: false # CHANGED
-      min_approach_linear_velocity: 0.05
+      min_approach_linear_velocity: 0.08
       approach_velocity_scaling_dist: 0.4
       use_collision_detection: true
       max_allowed_time_to_collision_up_to_carrot: 1.0 # the default is 1.0
