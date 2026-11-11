@@ -67,7 +67,7 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       # Added 061026
-      xy_goal_tolerance: 0.05 # orignally was 0.15
+      xy_goal_tolerance: 0.02 # orignally was 0.15
       yaw_goal_tolerance: 3.14 # 28.6 degree heading error
       stateful: true
     FollowPath:
@@ -79,7 +79,9 @@ controller_server:
       forward_sampling_distance: 0.25
 
       simulate_ahead_time: 1.0
-      rotate_to_heading_once: true
+      # false: re-check alignment on every new path, so after a replan the
+      # shim turns toward the detour before RPP drives forward. (was true)
+      rotate_to_heading_once: false
       rotate_to_goal_heading: false
       
       # Conservative values for the 0.60 m grid and tight right-angle turns.

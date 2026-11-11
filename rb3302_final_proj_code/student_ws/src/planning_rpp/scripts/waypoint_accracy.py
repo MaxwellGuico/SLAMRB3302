@@ -58,7 +58,7 @@ POSE_SAMPLE_HZ = 20.0
 RECOVERY_ACTIONS = ('spin', 'backup', 'wait')
 # End the recording if no new goal arrives this long after the last one
 # finished (letter_waypoint.py waits 3 s between goals, or was stopped).
-IDLE_TIMEOUT_S = 15.0
+IDLE_TIMEOUT_S = 180.0
 
 
 Pose2D = Tuple[float, float, float]  # x [m], y [m], yaw [rad] in the map frame

@@ -12,11 +12,20 @@ Example:
 
 The IRL coordinates below are calibrated to this specific map. If the map is
 replaced, rotated, resized, or given a different YAML origin, recalibrate them.
-Waypoint pauses are configured in Nav2's waypoint task executor, not here.
+NavigateToPose goals are sent one at a time. This script handles the three-second
+arrival pauses itself and announces failed goals before sending the next one.
+The configured Nav2 NavigateToPose behaviour tree still handles recovery.
+Do not run another mission client concurrently.
+
+Ctrl+C or SIGTERM cancels this entire four-waypoint mission, then waits up to
+--cancel-timeout seconds (default 5) before exiting. Other clients' goals are
+not cancelled. If confirmation times out, use the robot's stop control and
+inspect Nav2. SIGKILL cannot be handled. Nav2's stack is left running.
 """
 
 import argparse
 import math
+import signal
 import sys
 import time
 from typing import Iterable, List, Sequence, Tuple
@@ -24,9 +33,10 @@ from typing import Iterable, List, Sequence, Tuple
 import rclpy
 from action_msgs.msg import GoalStatus
 from geometry_msgs.msg import PoseStamped
-from nav2_msgs.action import FollowWaypoints
+from nav2_msgs.action import NavigateToPose
 from rclpy.action import ActionClient
 from rclpy.node import Node
+from rclpy.signals import SignalHandlerOptions
 from rclpy.utilities import remove_ros_args
 
 
@@ -92,179 +102,298 @@ def landmark_coordinates(label: str, map_profile: str = 'irl') -> Tuple[float, f
 
 
 class LetterWaypointMission(Node):
-    """Submit and monitor an ordered FollowWaypoints action."""
+    """Run four NavigateToPose goals and report each result before advancing."""
 
-    def __init__(
-        self, labels: Sequence[str], server_timeout: float, map_profile: str
-    ) -> None:
+    def __init__(self, labels, server_timeout, map_profile, pause_duration=3.0,
+                 skip_delay=3.0, cancel_timeout=5.0):
         super().__init__('letter_waypoint_mission')
         self._labels = list(labels)
         self._server_timeout = server_timeout
         self._map_profile = map_profile
-        self._current_waypoint = -1
-        self._client = ActionClient(self, FollowWaypoints, 'follow_waypoints')
+        self._pause_duration = pause_duration
+        self._skip_delay = skip_delay
+        self._cancel_timeout = cancel_timeout
+        self._client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
+        self._send_future = None
+        self._goal_handle = None
+        self._result_future = None
+        self.stop_requested = False
+        self.stop_signal = None
+        self.missed = []  # Store indices so repeated labels stay distinct.
 
-    def _make_pose(self, index: int) -> PoseStamped:
-        label = self._labels[index]
-        x, y = landmark_coordinates(label, self._map_profile)
+    def request_stop(self, signum=None, frame=None):
+        # Leave the ROS context alive until this node's goal is cancelled.
+        self.stop_requested = True
+        self.stop_signal = signum
 
-        # Face along the outgoing leg. For the last point, retain the heading
-        # of the incoming leg. Nav2 plans the route around walls between goals.
-        neighbour_index = index + 1 if index + 1 < len(self._labels) else index - 1
-        neighbour_x, neighbour_y = landmark_coordinates(
-            self._labels[neighbour_index], self._map_profile
-        )
-        if index + 1 < len(self._labels):
-            yaw = math.atan2(neighbour_y - y, neighbour_x - x)
-        else:
-            yaw = math.atan2(y - neighbour_y, x - neighbour_x)
+    def _wait(self, future, timeout=None, interruptible=True):
+        deadline = None if timeout is None else time.monotonic() + timeout
+        while rclpy.ok():
+            if interruptible and self.stop_requested:
+                return False
+            if future.done():
+                return True
+            if deadline is not None and time.monotonic() >= deadline:
+                return False
+            rclpy.spin_once(self, timeout_sec=0.1)
+        return False
 
+    def _delay(self, seconds, label='Waiting'):
+        deadline = time.monotonic() + seconds
+        last_remaining = None
+        while rclpy.ok() and not self.stop_requested:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                self.get_logger().info(f'{label}: complete.')
+                return True
+            countdown = math.ceil(remaining)
+            if countdown != last_remaining:
+                self.get_logger().info(f'{label}: {countdown}s remaining...')
+                last_remaining = countdown
+            rclpy.spin_once(self, timeout_sec=min(0.1, remaining))
+        self.get_logger().warning(f'{label}: interrupted; mission will not advance.')
+        return False
+
+    def _make_pose(self, index):
+        x, y = landmark_coordinates(self._labels[index], self._map_profile)
+        # Preserve the original headings. Goal yaw is largely unconstrained by
+        # the current Nav2 goal checker; Nav2 still plans around the walls.
+        neighbour = index + 1 if index + 1 < len(self._labels) else index - 1
+        nx, ny = landmark_coordinates(self._labels[neighbour], self._map_profile)
+        yaw = (math.atan2(ny - y, nx - x) if neighbour > index
+               else math.atan2(y - ny, x - nx))
         pose = PoseStamped()
         pose.header.frame_id = 'map'
         pose.header.stamp = self.get_clock().now().to_msg()
-        pose.pose.position.x = x
-        pose.pose.position.y = y
+        pose.pose.position.x, pose.pose.position.y = x, y
         pose.pose.orientation.z = math.sin(yaw / 2.0)
         pose.pose.orientation.w = math.cos(yaw / 2.0)
         return pose
 
-    def _feedback(self, feedback_message) -> None:
-        index = int(feedback_message.feedback.current_waypoint)
-        if index == self._current_waypoint or not 0 <= index < len(self._labels):
-            return
-
-        self._current_waypoint = index
-        label = self._labels[index]
-        x, y = landmark_coordinates(label, self._map_profile)
-        self.get_logger().info(
-            f'Navigating to waypoint {index + 1}/4: {label} at ({x:.3f}, {y:.3f})'
-        )
-
-    def _wait_for_action_server(self) -> bool:
+    def _wait_for_server(self):
         deadline = time.monotonic() + self._server_timeout
-        self.get_logger().info('Waiting for the Nav2 follow_waypoints action server...')
-        while rclpy.ok() and time.monotonic() < deadline:
-            if self._client.wait_for_server(timeout_sec=1.0):
+        self.get_logger().info('Waiting for navigate_to_pose...')
+        while rclpy.ok() and not self.stop_requested:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                self.get_logger().error('navigate_to_pose was not available in time')
+                return False
+            if self._client.wait_for_server(timeout_sec=min(0.2, remaining)):
                 return True
         return False
 
-    def _send_when_active(self, goal):
-        """Retry while the lifecycle action server exists but is not active yet."""
+    def _start_goal(self, index):
+        # Retry explicit rejections during lifecycle startup. Never resend a
+        # request whose acceptance is unknown, which could create another goal.
         deadline = time.monotonic() + self._server_timeout
-        while rclpy.ok() and time.monotonic() < deadline:
-            send_future = self._client.send_goal_async(
-                goal, feedback_callback=self._feedback
-            )
-            rclpy.spin_until_future_complete(self, send_future)
-            goal_handle = send_future.result()
-            if goal_handle is not None and goal_handle.accepted:
-                return goal_handle
-
-            self.get_logger().warning(
-                'Nav2 rejected the mission; retrying in 1 second '
-                '(the waypoint server may still be activating)'
-            )
-            time.sleep(1.0)
-        return None
-
-    def run(self) -> bool:
-        if not self._wait_for_action_server():
-            self.get_logger().error(
-                f'follow_waypoints was not available after {self._server_timeout:.0f} seconds'
-            )
-            return False
-
-        goal = FollowWaypoints.Goal()
-        goal.number_of_loops = 0
-        goal.goal_index = 0
-        goal.poses = [self._make_pose(index) for index in range(len(self._labels))]
-
-        route = ' -> '.join(self._labels)
-        self.get_logger().info(f'Starting four-waypoint mission: {route}')
-        self.get_logger().info(f'Using map geometry: {self._map_profile}')
-        self.get_logger().info(
-            'Waypoint pauses follow the Nav2 waypoint task executor configuration.'
-        )
-        started_at = time.monotonic()
-
-        goal_handle = self._send_when_active(goal)
-        if goal_handle is None:
-            self.get_logger().error(
-                f'Nav2 did not accept the mission within {self._server_timeout:.0f} seconds'
-            )
-            return False
-
-        result_future = goal_handle.get_result_async()
-        rclpy.spin_until_future_complete(self, result_future)
-        wrapped_result = result_future.result()
-        if wrapped_result is None:
-            self.get_logger().error('The waypoint mission ended without a result')
-            return False
-
-        elapsed = time.monotonic() - started_at
-        result = wrapped_result.result
-        missed = [int(item.index) for item in result.missed_waypoints]
-        if wrapped_result.status == GoalStatus.STATUS_SUCCEEDED and not missed:
-            self.get_logger().info(
-                f'Mission complete: visited {route} in {elapsed:.1f} seconds'
-            )
-            return True
-
-        missed_labels = [
-            self._labels[index] for index in missed if 0 <= index < len(self._labels)
-        ]
-        error_text = result.error_msg or f'action status {wrapped_result.status}'
-        if missed_labels:
-            error_text += '; missed: ' + ', '.join(missed_labels)
-        self.get_logger().error(f'Mission failed after {elapsed:.1f} seconds: {error_text}')
+        while rclpy.ok() and not self.stop_requested:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                self.get_logger().error('Nav2 did not accept the goal in time')
+                return False
+            goal = NavigateToPose.Goal()
+            goal.pose = self._make_pose(index)
+            goal.behavior_tree = ''  # Use configured default_nav_to_pose_bt_xml.
+            self._send_future = self._client.send_goal_async(goal)
+            if not self._wait(self._send_future, timeout=remaining):
+                self.get_logger().warning(
+                    'Goal acceptance interrupted or timed out; stopping mission')
+                return False
+            handle = self._send_future.result()
+            self._send_future = None
+            if handle is None:
+                self.get_logger().error('Nav2 returned no goal handle')
+                return False
+            if handle.accepted:
+                self._goal_handle = handle
+                self._result_future = handle.get_result_async()
+                return True
+            self.get_logger().warning('Goal rejected; retrying while Nav2 activates')
+            if not self._delay(min(1.0, max(0.0, deadline-time.monotonic())),
+                               'Nav2 startup retry delay'):
+                return False
         return False
 
+    def cancel_active_goal(self):
+        """Cancel only this node's goal and await its terminal result."""
+        deadline = time.monotonic() + self._cancel_timeout
+        def remaining():
+            return max(0.0, deadline - time.monotonic())
+        try:
+            if self._send_future is not None:
+                if not self._wait(self._send_future, remaining(), False):
+                    self.get_logger().error(
+                        'Could not resolve pending goal acceptance; cancellation '
+                        'is unconfirmed. Check the robot before leaving it.')
+                    return False
+                handle = self._send_future.result()
+                self._send_future = None
+                if handle is not None and handle.accepted:
+                    self._goal_handle = handle
+                    self._result_future = handle.get_result_async()
+            if self._goal_handle is None:
+                return True
+            if self._result_future is None:
+                self._result_future = self._goal_handle.get_result_async()
+            if not self._result_future.done():
+                self.get_logger().warning('Cancelling this mission\'s active goal...')
+                cancel_future = self._goal_handle.cancel_goal_async()
+                if not self._wait(cancel_future, remaining(), False):
+                    self.get_logger().error('Cancellation acknowledgement timed out')
+                    return False
+                response = cancel_future.result()
+                if response is None or not response.goals_canceling:
+                    self.get_logger().warning(
+                        'Cancel was not accepted; checking whether goal already ended')
+            if not self._wait(self._result_future, remaining(), False):
+                self.get_logger().error(
+                    'Goal termination is unconfirmed. Check the robot before leaving it.')
+                return False
+            result = self._result_future.result()
+            if result is None or result.status not in (
+                    GoalStatus.STATUS_SUCCEEDED, GoalStatus.STATUS_ABORTED,
+                    GoalStatus.STATUS_CANCELED):
+                self.get_logger().error('No confirmed terminal goal result')
+                return False
+            self.get_logger().info('This mission\'s goal has ended')
+            self._goal_handle = self._result_future = None
+            return True
+        except Exception as error:
+            self.get_logger().error(f'Could not confirm cancellation: {error}')
+            return False
 
-def argument_parser() -> argparse.ArgumentParser:
+    def run(self):
+        if not self._wait_for_server():
+            return False
+        started = time.monotonic()
+        self.get_logger().info(
+            f'Starting four-waypoint mission: {" -> ".join(self._labels)} '
+            f'(map profile: {self._map_profile})')
+        for index, label in enumerate(self._labels):
+            if self.stop_requested or not rclpy.ok():
+                return False
+            x, y = landmark_coordinates(label, self._map_profile)
+            self.get_logger().info(
+                f'Navigating to waypoint {index+1}/4: {label} at ({x:.3f}, {y:.3f})')
+            if not self._start_goal(index):
+                return False
+            if not self._wait(self._result_future):
+                return False
+            wrapped = self._result_future.result()
+            if wrapped is None:
+                self.get_logger().error('Missing navigation result; stopping mission')
+                return False
+            # A received result is terminal: cleanup must not cancel another goal.
+            self._goal_handle = self._result_future = None
+            if self.stop_requested:
+                return False
+            code = int(getattr(wrapped.result, 'error_code', 0))
+            reason = getattr(wrapped.result, 'error_msg', '')
+            if wrapped.status == GoalStatus.STATUS_SUCCEEDED and code == 0:
+                self.get_logger().info(
+                    f'ARRIVED: {label} (waypoint {index+1}/4). '
+                    f'Waiting {self._pause_duration:.1f} seconds.')
+                # NavigateToPose does not invoke WaitAtWaypoint. The mission
+                # owns this pause, including after the final destination.
+                if not self._delay(self._pause_duration, f'Arrival pause at {label}'):
+                    return False
+            elif wrapped.status == GoalStatus.STATUS_ABORTED or (
+                    wrapped.status == GoalStatus.STATUS_SUCCEEDED and code != 0):
+                self.missed.append(index)
+                detail = reason or f'action status {wrapped.status}, error code {code}'
+                if index+1 < len(self._labels):
+                    next_label = self._labels[index+1]
+                    self.get_logger().error(
+                        f'SKIPPED: {label} failed (waypoint {index+1}/4): {detail}. '
+                        f'Skipping to {next_label} in {self._skip_delay:.1f} seconds. '
+                        'Declare this skip verbally for the graded run.')
+                    if not self._delay(self._skip_delay, f'Skip delay after {label}'):
+                        return False
+                else:
+                    self.get_logger().error(
+                        f'FAILED: final waypoint {label}: {detail}. No next waypoint.')
+            else:
+                # External cancellation/preemption is not permission to resume.
+                self.get_logger().warning(
+                    f'Waypoint {label} ended with status {wrapped.status}; '
+                    'mission stopped without advancing.')
+                return False
+        elapsed = time.monotonic() - started
+        if self.missed:
+            missed = ', '.join(f'{self._labels[i]} (#{i+1})' for i in self.missed)
+            self.get_logger().error(
+                f'Mission finished after {elapsed:.1f} seconds; missed: {missed}')
+            return False
+        self.get_logger().info(
+            f'Mission complete: visited {" -> ".join(self._labels)} '
+            f'in {elapsed:.1f} seconds')
+        return True
+
+
+def argument_parser():
     parser = argparse.ArgumentParser(
-        description=(
-            'Visit exactly four RB3302 grid letters in order. '
-            'Letters may be separated by spaces or commas.'
-        )
-    )
-    parser.add_argument('letters', nargs='+', help='four letters in the range A-X')
-    parser.add_argument(
-        '--server-timeout',
-        type=float,
-        default=60.0,
-        help='seconds to wait for the Nav2 action server (default: 60)',
-    )
-    parser.add_argument(
-        '--map-profile',
-        choices=sorted(MAP_GEOMETRIES),
-        default='irl',
-        help='map geometry used for letter coordinates (default: irl)',
-    )
+        description='Visit exactly four A-X goals, announcing failed waypoints.')
+    parser.add_argument('letters', nargs='+', help='four A-X letters; repeats allowed')
+    parser.add_argument('--server-timeout', type=float, default=60.0,
+                        help='seconds to wait for server/goal acceptance (default: 60)')
+    parser.add_argument('--map-profile', choices=sorted(MAP_GEOMETRIES), default='irl')
+    parser.add_argument('--pause-duration', type=float, default=3.0,
+                        help='seconds at each successful goal; minimum 3 (default: 3)')
+    parser.add_argument('--skip-delay', type=float, default=3.0,
+                        help='announcement delay before next goal after failure (default: 3)')
+    parser.add_argument('--cancel-timeout', type=float, default=5.0,
+                        help='seconds to confirm goal termination on exit (default: 5)')
     return parser
 
 
-def main(args=None) -> int:
+def main(args=None):
     ros_args = sys.argv if args is None else args
-    non_ros_args = remove_ros_args(args=ros_args)[1:]
+    parser = argument_parser()
+    parsed = parser.parse_args(remove_ros_args(args=ros_args)[1:])
     try:
-        parsed = argument_parser().parse_args(non_ros_args)
         labels = parse_labels(parsed.letters)
-        if not math.isfinite(parsed.server_timeout) or parsed.server_timeout <= 0.0:
-            raise ValueError('--server-timeout must be a positive finite number')
+        for name in ('server_timeout', 'cancel_timeout'):
+            value = getattr(parsed, name)
+            if not math.isfinite(value) or value <= 0:
+                raise ValueError(f'--{name.replace("_", "-")} must be positive and finite')
+        if not math.isfinite(parsed.pause_duration) or parsed.pause_duration < 3:
+            raise ValueError('--pause-duration must be finite and at least 3 seconds')
+        if not math.isfinite(parsed.skip_delay) or parsed.skip_delay < 0:
+            raise ValueError('--skip-delay must be finite and non-negative')
     except ValueError as error:
-        argument_parser().error(str(error))
+        parser.error(str(error))
 
-    rclpy.init(args=ros_args)
-    node = LetterWaypointMission(labels, parsed.server_timeout, parsed.map_profile)
+    rclpy.init(args=ros_args, signal_handler_options=SignalHandlerOptions.NO)
+    node = None
+    previous_handlers = {}
+    exit_code = 1
     try:
-        return 0 if node.run() else 1
+        node = LetterWaypointMission(labels, parsed.server_timeout, parsed.map_profile,
+                                     parsed.pause_duration, parsed.skip_delay,
+                                     parsed.cancel_timeout)
+        for signum in (signal.SIGINT, signal.SIGTERM):
+            previous_handlers[signum] = signal.signal(signum, node.request_stop)
+        exit_code = 0 if node.run() else 1
     except KeyboardInterrupt:
-        node.get_logger().warning('Waypoint mission interrupted')
-        return 130
+        exit_code = 130
+    except Exception as error:
+        if node is not None:
+            node.get_logger().error(f'Mission stopped: {error}')
+        else:
+            print(f'Could not create mission node: {error}', file=sys.stderr)
     finally:
-        node.destroy_node()
+        if node is not None:
+            confirmed = node.cancel_active_goal()
+            if not confirmed:
+                exit_code = 1
+            if node.stop_requested:
+                exit_code = 128 + (node.stop_signal or signal.SIGINT)
+            node.destroy_node()
         if rclpy.ok():
             rclpy.shutdown()
+        for signum, handler in previous_handlers.items():
+            signal.signal(signum, handler)
+    return exit_code
 
 
 if __name__ == '__main__':
