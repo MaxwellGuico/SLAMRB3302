@@ -6,7 +6,7 @@ RB3302 final project: a Waverover robot that drives to four letter points
 ```text
 rb3302/
 ├── 1_Project_Logs/   daily project logs (Project Log - YYYY-MM-DD.md)
-├── 2_Simulation/     Gazebo simulation (only robot_ws/src and student_ws/src are in git)
+├── 2_Simulation/     Gazebo simulation (only src folders + README are in git)
 └── 3_IRL/            code that runs on the physical robot
 ```
 
@@ -53,6 +53,9 @@ locally with the steps below.
 ---
 
 ## Simulation
+
+How the simulation works, the sim-to-real gap and the challenges faced are in
+[`2_Simulation/README.md`](2_Simulation/README.md).
 
 ### Build
 

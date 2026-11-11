@@ -30,7 +30,7 @@ locally after cloning:
 
 ```bash
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-cd "$REPO_ROOT/robot_ws"
+cd "$REPO_ROOT/2_Simulation/robot_ws"
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install --packages-select robot_model rb3302_sim
 source install/setup.bash
@@ -74,7 +74,7 @@ and run:
 ```bash
 source /opt/ros/jazzy/setup.bash
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-source "$REPO_ROOT/robot_ws/install/setup.bash"
+source "$REPO_ROOT/2_Simulation/robot_ws/install/setup.bash"
 ros2 run rb3302_sim smoke_test
 ```
 
@@ -102,7 +102,7 @@ navigation is robust to more than one favourable error sample.
 ## Run the navigation stack
 
 The current host first needs the packages declared by `planning_rpp`. From the
-repository root, build the navigation package once:
+`2_Simulation` folder, build the navigation package once:
 
 ```bash
 source /opt/ros/jazzy/setup.bash
@@ -118,12 +118,12 @@ the map and Nav2 settings synced from the latest IRL branch:
 ```bash
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 source /opt/ros/jazzy/setup.bash
-source "$REPO_ROOT/robot_ws/install/setup.bash"
-source "$REPO_ROOT/student_ws/install/setup.bash"
+source "$REPO_ROOT/2_Simulation/robot_ws/install/setup.bash"
+source "$REPO_ROOT/2_Simulation/student_ws/install/setup.bash"
 ros2 launch planning_rpp planning.launch.py \
   use_sim_time:=true \
-  map:="$REPO_ROOT/student_ws/maps/rb3302_map.yaml" \
-  params_file:="$REPO_ROOT/student_ws/src/planning_rpp/config/nav2_params_irl.yaml" \
+  map:="$REPO_ROOT/2_Simulation/student_ws/src/planning_rpp/maps/rb3302_map.yaml" \
+  params_file:="$REPO_ROOT/2_Simulation/student_ws/src/planning_rpp/config/nav2_params_irl.yaml" \
   rviz:=true \
   set_initial_pose:=false
 ```

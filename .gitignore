@@ -12,6 +12,7 @@
 /2_Simulation/*
 !/2_Simulation/robot_ws/
 !/2_Simulation/student_ws/
+!/2_Simulation/README.md
 /2_Simulation/robot_ws/*
 /2_Simulation/student_ws/*
 !/2_Simulation/robot_ws/src/
