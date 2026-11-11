@@ -1,0 +1,30 @@
+# Physical cell-centre samples from 2026-11-11.
+# Map-localized base_link positions in metres; validate by physical arrivals.
+# After carrying the robot, AMCL was approximately reinitialized in RViz.
+frame_id: map
+map_profile: irl
+points:
+  A: {x: 0.075, y: 0.057}
+  B: {x: 0.633, y: 0.040}
+  C: {x: 1.159, y: 0.090}
+  D: {x: 1.776, y: 0.116}
+  E: {x: 2.387, y: 0.095}
+  F: {x: 2.912, y: 0.113}
+  G: {x: 0.021, y: -0.517}
+  H: {x: 0.650, y: -0.530}
+  I: {x: 1.214, y: -0.508}
+  J: {x: 1.808, y: -0.509}
+  K: {x: 2.345, y: -0.513}
+  L: {x: 2.919, y: -0.525}  # Latest reading; restart repeatability unresolved.
+  M: {x: 0.024, y: -1.115}
+  N: {x: 0.588, y: -1.096}
+  O: {x: 1.198, y: -1.128}
+  P: {x: 1.795, y: -1.096}
+  Q: {x: 2.378, y: -1.134}
+  R: {x: 2.942, y: -1.144}
+  S: {x: -0.012, y: -1.671}
+  T: {x: 0.620, y: -1.595}  # User selected second reading after RViz reset.
+  U: {x: 1.246, y: -1.683}
+  V: {x: 1.766, y: -1.651}
+  W: {x: 2.320, y: -1.701}
+  X: {x: 2.939, y: -1.668}

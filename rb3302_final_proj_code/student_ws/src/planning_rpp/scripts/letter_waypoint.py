@@ -10,7 +10,7 @@ Reference layout (viewed from above, matching the PGM):
 Example:
     python3 letter_waypoint.py A H Q X
 
-The IRL coordinates below are calibrated to this specific map. If the map is
+IRL coordinates are loaded from config/letter_coordinates.yaml. If the map is
 replaced, rotated, resized, or given a different YAML origin, recalibrate them.
 NavigateToPose goals are sent one at a time. This script handles the three-second
 arrival pauses itself and announces failed goals before sending the next one.
@@ -91,11 +91,76 @@ def parse_labels(values: Iterable[str]) -> List[str]:
     return labels
 
 
+# YAML coordinate loading is separate from navigation and precision control.
+_letter_coordinate_points = None
+_letter_coordinate_path = None
+
+
+def configure_letter_coordinates(filename=None):
+    """Validate all IRL points once, before starting the mission."""
+    global _letter_coordinate_points, _letter_coordinate_path
+    import math
+    from pathlib import Path
+    import yaml
+
+    if filename is None:
+        source_path = Path(__file__).resolve().parent.parent / 'config' / 'letter_coordinates.yaml'
+        if source_path.is_file():
+            path = source_path
+        else:
+            from ament_index_python.packages import get_package_share_directory
+            path = Path(get_package_share_directory('planning_rpp')) / 'config' / 'letter_coordinates.yaml'
+    else:
+        path = Path(filename).expanduser().resolve()
+
+    class UniqueLoader(yaml.SafeLoader):
+        pass
+
+    def unique_mapping(loader, node, deep=False):
+        result = {}
+        for key_node, value_node in node.value:
+            key = loader.construct_object(key_node, deep=deep)
+            if not isinstance(key, str) or key in result:
+                raise ValueError('Coordinate YAML keys must be unique strings')
+            result[key] = loader.construct_object(value_node, deep=deep)
+        return result
+
+    UniqueLoader.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, unique_mapping)
+    try:
+        with path.open(encoding='utf-8') as stream:
+            document = yaml.load(stream, Loader=UniqueLoader)
+    except (OSError, yaml.YAMLError) as error:
+        raise ValueError(f'Cannot load coordinates from {path}: {error}') from error
+    if not isinstance(document, dict) or document.get('frame_id') != 'map':
+        raise ValueError('Coordinate YAML must specify frame_id: map')
+    if document.get('map_profile') != 'irl':
+        raise ValueError('Coordinate YAML must specify map_profile: irl')
+    points = document.get('points')
+    expected = {chr(value) for value in range(ord('A'), ord('X') + 1)}
+    if not isinstance(points, dict) or set(points) != expected:
+        raise ValueError('Coordinate YAML must contain exactly the 24 points A-X')
+    validated = {}
+    for label, point in points.items():
+        if not isinstance(point, dict) or set(point) != {'x', 'y'}:
+            raise ValueError(f'{label}: expected x and y fields only')
+        values = (point['x'], point['y'])
+        if any(isinstance(value, bool) or not isinstance(value, (int, float))
+               or not math.isfinite(value) for value in values):
+            raise ValueError(f'{label}: x and y must be finite numbers in metres')
+        validated[label] = tuple(float(value) for value in values)
+    _letter_coordinate_points = validated
+    _letter_coordinate_path = path
+
+
 def landmark_coordinates(label: str, map_profile: str = 'irl') -> Tuple[float, float]:
-    """Return a labelled cell's measured centre in the ROS map frame."""
+    """Use YAML for IRL targets; preserve the existing ideal profile."""
     if len(label) != 1 or not 'A' <= label <= 'X':
         raise ValueError(f'waypoint letter must be in the range A-X: {label}')
-
+    if map_profile == 'irl':
+        if _letter_coordinate_points is None:
+            configure_letter_coordinates()
+        return _letter_coordinate_points[label]
     geometry = MAP_GEOMETRIES[map_profile]
     row, column = divmod(ord(label) - FIRST_LABEL, GRID_COLUMNS)
     return geometry['column_centres_x'][column], geometry['row_centres_y'][row]
@@ -337,6 +402,8 @@ def argument_parser():
     parser.add_argument('--server-timeout', type=float, default=60.0,
                         help='seconds to wait for server/goal acceptance (default: 60)')
     parser.add_argument('--map-profile', choices=sorted(MAP_GEOMETRIES), default='irl')
+    parser.add_argument('--coordinates-file', default=None,
+                        help='IRL coordinate YAML; default: config/letter_coordinates.yaml')
     parser.add_argument('--pause-duration', type=float, default=3.0,
                         help='seconds at each successful goal; minimum 3 (default: 3)')
     parser.add_argument('--skip-delay', type=float, default=3.0,
@@ -352,6 +419,10 @@ def main(args=None):
     parsed = parser.parse_args(remove_ros_args(args=ros_args)[1:])
     try:
         labels = parse_labels(parsed.letters)
+        if parsed.map_profile == 'irl':
+            configure_letter_coordinates(parsed.coordinates_file)
+        elif parsed.coordinates_file is not None:
+            raise ValueError('--coordinates-file is only for the irl profile')
         for name in ('server_timeout', 'cancel_timeout'):
             value = getattr(parsed, name)
             if not math.isfinite(value) or value <= 0:
@@ -371,6 +442,8 @@ def main(args=None):
         node = LetterWaypointMission(labels, parsed.server_timeout, parsed.map_profile,
                                      parsed.pause_duration, parsed.skip_delay,
                                      parsed.cancel_timeout)
+        if parsed.map_profile == 'irl':
+            node.get_logger().info(f'Loaded letter coordinates: {_letter_coordinate_path}')
         for signum in (signal.SIGINT, signal.SIGTERM):
             previous_handlers[signum] = signal.signal(signum, node.request_stop)
         exit_code = 0 if node.run() else 1

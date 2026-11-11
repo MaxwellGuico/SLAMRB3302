@@ -14,6 +14,7 @@ install(
     scripts/yaw_diagnostic.py
     scripts/letter_waypoint.py
     scripts/letter_waypoint_precision.py
+    scripts/letter_waypoint_grid.py
     scripts/waypoint_accracy.py
   DESTINATION lib/${PROJECT_NAME}
 )
