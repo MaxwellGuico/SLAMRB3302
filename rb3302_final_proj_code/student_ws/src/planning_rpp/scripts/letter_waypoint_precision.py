@@ -10,7 +10,7 @@ Reference layout (viewed from above, matching the PGM):
 Example:
     python3 letter_waypoint_precision.py A H Q X
 
-Experimental final approach: cancels NavigateToPose within 0.15 m, then uses
+Experimental final approach version 2 (conservative alignment with oscillation guard): cancels NavigateToPose within 0.15 m, then uses
 collision-checked Spin and DriveOnHeading actions and fresh AMCL updates.
 Stops the mission on collision, stale localization, or lack of progress.
 Success means 0.02 m estimated map-position error, not verified physical accuracy.
@@ -380,11 +380,12 @@ class PrecisionWaypointMission(LetterWaypointMission):
         self._refresh = self.create_client(Empty, '/request_nomotion_update')
         self._spin = ActionClient(self, Spin, 'spin')
         self._drive = ActionClient(self, DriveOnHeading, 'drive_on_heading')
-        self.handoff_radius = 0.15
+        self.handoff_radius = 0.10 # Nav2 handle more of the approach
         self.position_tolerance = 0.02
-        self.heading_tolerance = 0.0873  # About five degrees.
+        self.heading_tolerance = 0.20  # About 11 degrees
         self.step_distance = 0.03
         self.step_speed = 0.08  # Trial value; verify physical motion on the floor.
+        # Configure behavior_server Spin limits separately; see accompanying settings.
         self.approach_timeout = 90.0
         self.max_corrections = 30
 
@@ -475,7 +476,8 @@ class PrecisionWaypointMission(LetterWaypointMission):
         self._goal_handle = handle
         self._result_future = handle.get_result_async()
         if not self._wait(self._result_future, timeout=12.0):
-            raise PrecisionFailure('Behavior timed out or interrupted')
+            raise PrecisionFailure('Approach interrupted' if self.stop_requested
+                                       else 'Behavior result timed out')
         result = self._result_future.result()
         self._goal_handle = self._result_future = None
         if (result is None or result.status != GoalStatus.STATUS_SUCCEEDED or
@@ -487,6 +489,9 @@ class PrecisionWaypointMission(LetterWaypointMission):
         self._settle()  # Let the smoother/base finish stopping after cancellation.
         best = float('inf')
         non_improving_drives = 0
+        previous_heading = None
+        reversals_without_progress = 0
+        best_rotation_distance = float('inf')
         until = time.monotonic() + self.approach_timeout
         for attempt in range(self.max_corrections):
             if time.monotonic() >= until:
@@ -505,13 +510,24 @@ class PrecisionWaypointMission(LetterWaypointMission):
                         f'PRECISION ARRIVAL: estimated error {check:.3f} m')
                     return
                 continue
+            if distance < best_rotation_distance - 0.003:
+                best_rotation_distance = distance
+                reversals_without_progress = 0
             if abs(heading) > self.heading_tolerance:
+                if previous_heading is not None and heading * previous_heading < 0:
+                    reversals_without_progress += 1
+                if reversals_without_progress >= 3:
+                    raise PrecisionFailure(
+                        'Repeated alignment reversals without position progress; '
+                        'check Spin braking and AMCL pose stability')
+                previous_heading = heading
                 goal = Spin.Goal()
                 # Deliberate alignment toward the target, not arbitrary recovery spin.
-                goal.target_yaw = max(-0.6, min(0.6, heading))
+                goal.target_yaw = max(-0.3, min(0.3, 0.5 * heading))
                 goal.time_allowance.sec = 10
                 self._behavior(self._spin, goal)
             else:
+                previous_heading = None
                 if distance < best - 0.003:
                     best = distance
                     non_improving_drives = 0
@@ -561,6 +577,24 @@ class PrecisionWaypointMission(LetterWaypointMission):
             self.get_logger().error(str(error) + '; stopping this mission')
             # Main's finally block resolves/cancels any pending behavior action.
             return None
+
+    def _start_goal(self, index):
+        if self.stop_requested:
+            return False
+
+        target = landmark_coordinates(
+            self._labels[index], self._map_profile
+        )
+        try:
+            # Refresh localization after the stationary waypoint pause.
+            self._fresh_pose(target)
+        except PrecisionFailure as error:
+            self.get_logger().error(
+                f'Cannot start next waypoint: {error}'
+            )
+            return False
+
+        return super()._start_goal(index)
 
 
 def argument_parser():
