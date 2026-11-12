@@ -77,13 +77,15 @@ saved with `map_saver_cli` into `maps/rb3302_map.{yaml,pgm}`.
 | Script | What it does |
 | --- | --- |
 | `letter_waypoint.py` | Sends four letters to Nav2 one at a time, waits 3 s at each, and announces and skips failed goals. |
-| `letter_waypoint_precision.py` | **Used for the final runs.** Same as above, but stops Nav2 about 10–15 cm from the cell and finishes with small, collision-checked `Spin` and `DriveOnHeading` moves, checking AMCL between moves. |
+| `letter_waypoint_precision.py` | **Used for the final runs.** Same as above, but stops Nav2 within 10 cm of the cell and finishes with small, collision-checked `Spin` and `DriveOnHeading` moves, checking AMCL between moves. A cell counts as reached only after the robot has been stopped for 1 s and five fresh AMCL poses all fall within 2 cm of the target and within 1 cm of each other. If the fine approach fails, the robot confirms it has stopped, announces the cell as missed and moves on. |
 | `letter_waypoint_grid.py` | Experimental cell-to-cell route with stops at turns. Set aside. |
 | `waypoint_accracy.py`, `yaw_diagnostic.py` | Measurement tools used while tuning. |
 
 Cell coordinates for both waypoint scripts are in
 `config/letter_coordinates.yaml`. They were sampled by placing the robot at
-each of the 24 cell centres and reading its AMCL pose.
+each of the 24 cell centres and reading its AMCL pose. Cells O, P and S–X
+were re-sampled on 12 Nov after the URDF fix; earlier readings are kept as
+comments next to each entry.
 
 ---
 
@@ -102,7 +104,7 @@ each of the 24 cell centres and reading its AMCL pose.
 | 9 | **Controller fell from 20 Hz to ~1 Hz, EKF from 50 Hz to ~17 Hz, TF extrapolation errors** | Turning obstacle clearing off left stale obstacles; costmap work and constant replanning overloaded the onboard computer. | Restored `clearing: true`, reduced costmap overhead, and made the tree force a replan instead of looping on an unusable path. Raised `transform_tolerance`. EKF returned to ~50 Hz and the controller to ~20 Hz. |
 | 10 | **Cutting corners near obstacles** | Path hugged inflated edges. | Inflation radius 0.40 m with `cost_scaling_factor: 3.0`, matched in RPP's cost-regulated speed. |
 | 11 | **Whole stack crashed on a typo** | An integer given where Nav2 expects a double (e.g. `1` instead of `1.0`) makes the node fail to start. | All float parameters written with a decimal point. |
-| 12 | **Poor final approach** | At low speed the wheels slip, and RPP alone stopped several centimetres off-centre. | `letter_waypoint_precision.py`: hand over from Nav2 near the cell to short `Spin`/`DriveOnHeading` moves, with AMCL refreshes, an oscillation guard and a bounded number of attempts. |
+| 12 | **Poor final approach** | At low speed the wheels slip, and RPP alone stopped several centimetres off-centre. A single AMCL reading could also report arrival while the pose was still shifting. | `letter_waypoint_precision.py`: hand over from Nav2 near the cell to short `Spin`/`DriveOnHeading` moves, with AMCL refreshes, an oscillation guard and a bounded number of attempts. Arrival needs five stable AMCL poses taken while stopped. A failed fine approach now skips the cell instead of ending the mission. |
 | 13 | **5–10 cm residual positioning error** | Calibrating all 24 cell centres helped only slightly, which pointed to a deeper error. | Traced to a sign error in the LiDAR mounting offset in the URDF (`robot_ws`). Fixing it was **the decisive improvement**. |
 | 14 | **Ctrl+C on the mission crashed Nav2; failures ended the run** | The script exited without cancelling its goal. | Mission scripts now cancel goals on Ctrl+C/SIGTERM, count down 3 s at each stop, announce a missed cell, and move on to the next one. |
 
@@ -173,6 +175,17 @@ ros2 run planning_rpp letter_waypoint_precision.py A H Q X
 
 `Ctrl+C` cancels the mission cleanly. If anything crashes, run
 `~/rb3302_final_proj_code/kill.sh` before relaunching.
+
+To record a run for debugging, start this in another terminal before the
+mission and press `Ctrl+C` after the last cell:
+
+```bash
+~/rb3302_final_proj_code/record_debug.sh 01   # run number 01–99
+```
+
+It saves a bag to `~/rb3302_final_proj_code/rosbags/<run>-DD-MM-YY` with TF,
+odometry, AMCL pose, the plan, velocity commands, Nav2 goal status and
+`/rosout`. Earlier debug bags are in the same `rosbags/` folder.
 
 ### Navigation (A*, reference only)
 

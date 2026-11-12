@@ -10,10 +10,14 @@ Reference layout (viewed from above, matching the PGM):
 Example:
     python3 letter_waypoint_precision.py A H Q X
 
-Experimental final approach version 2 (conservative alignment with oscillation guard): cancels NavigateToPose within 0.15 m, then uses
+Experimental final approach (conservative alignment with oscillation guard): cancels NavigateToPose within 0.10 m, then uses
 collision-checked Spin and DriveOnHeading actions and fresh AMCL updates.
-Stops the mission on collision, stale localization, or lack of progress.
+Skips a waypoint after a confirmed precision movement failure or exhausted
+corrections, once stopping is confirmed. Stale localization, unconfirmed
+cancellation, and external interruption still stop the mission.
 Success means 0.02 m estimated map-position error, not verified physical accuracy.
+Arrival requires one second continuously stopped, then five fresh AMCL estimates
+within 0.02 m of the target and no more than 0.01 m apart from one another.
 The stock letter_waypoint.py is unchanged. Do not run both scripts together.
 
 IRL coordinates are loaded from config/letter_coordinates.yaml. If the map is
@@ -415,6 +419,10 @@ class PrecisionFailure(RuntimeError):
     pass
 
 
+class PrecisionMovementFailure(PrecisionFailure):
+    """A failed correction that may be skipped after confirming a stop."""
+
+
 def approach_geometry(x, y, yaw, goal_x, goal_y):
     """Map-frame distance and shortest relative bearing, in metres/radians."""
     dx, dy = goal_x - x, goal_y - y
@@ -496,30 +504,76 @@ class PrecisionWaypointMission(LetterWaypointMission):
         return approach_geometry(pose.position.x, pose.position.y, yaw, *target)
 
     def _settle(self, seconds=0.5):
+        """Wait for continuous stopping; report motion separately from stale data."""
         start = time.monotonic()
         stable_since = None
+        next_notice = start + 1.0
+        last_state = 'No /odom message received'
         while time.monotonic() - start < 4.0:
             if self.stop_requested or not rclpy.ok():
                 raise PrecisionFailure('Approach interrupted')
             rclpy.spin_once(self, timeout_sec=0.05)
             now = time.monotonic()
             motion = self._motion
-            stopped = (motion is not None and now - self._motion_received < 0.5
-                       and math.hypot(motion.linear.x, motion.linear.y) < 0.01
-                       and abs(motion.angular.z) < 0.05)
+            stopped = False
+            if motion is None:
+                last_state = 'No /odom message received'
+            else:
+                age = now - self._motion_received
+                linear = math.hypot(motion.linear.x, motion.linear.y)
+                angular = abs(motion.angular.z)
+                finite = math.isfinite(linear) and math.isfinite(angular)
+                fresh = age < 0.5
+                stopped = fresh and finite and linear < 0.01 and angular < 0.08
+                if not finite:
+                    reason = 'non-finite odometry velocity'
+                elif not fresh:
+                    reason = 'stale /odom'
+                elif not stopped:
+                    reason = 'reported velocity above stop thresholds'
+                else:
+                    reason = 'accumulating continuous stationary time'
+                last_state = (
+                    f'{reason}; /odom age={age:.3f}s, '
+                    f'linear={linear:.4f}m/s (must be <0.0100), '
+                    f'|angular|={angular:.4f}rad/s (must be <0.0800)')
             if stopped:
                 if stable_since is None:
                     stable_since = now
-                if now - start >= seconds and now - stable_since >= 0.2:
+                if now - stable_since >= seconds:
                     return
             else:
                 stable_since = None
-        raise PrecisionFailure('Robot did not settle or odometry became stale')
+            if now >= next_notice:
+                held = 0.0 if stable_since is None else now - stable_since
+                self.get_logger().warning(
+                    f'SETTLE: {last_state}; '
+                    f'stationary={held:.2f}/{seconds:.2f}s')
+                next_notice = now + 1.0
+        raise PrecisionFailure('Robot did not settle within 4 seconds: ' + last_state)
 
     def _fresh_pose(self, target):
         """Request a scan-based correction and wait for a newer AMCL pose."""
-        if not self._refresh.wait_for_service(timeout_sec=1.0):
-            raise PrecisionFailure('AMCL request_nomotion_update unavailable')
+        # DDS discovery/lifecycle startup may lag behind NavigateToPose readiness.
+        # Wait for discovery only; do not resend an in-flight refresh request.
+        deadline = time.monotonic() + 15.0
+        next_notice = 0.0
+        while True:
+            if self.stop_requested or not rclpy.ok():
+                raise PrecisionFailure('Approach interrupted')
+            remaining = deadline - time.monotonic()
+            if remaining <= 0.0:
+                raise PrecisionFailure(
+                    'AMCL request_nomotion_update unavailable after 15 seconds')
+            if self._refresh.wait_for_service(timeout_sec=min(0.2, remaining)):
+                break
+            now = time.monotonic()
+            if now >= next_notice:
+                self.get_logger().warning(
+                    'Waiting for AMCL request_nomotion_update; retrying '
+                    f'({max(0.0, deadline - now):.1f}s remaining)')
+                next_notice = now + 3.0
+            rclpy.spin_once(self, timeout_sec=0.05)
         before = self._pose.header.stamp if self._pose is not None else None
         before_ns = (-1 if before is None else
                      before.sec * 1000000000 + before.nanosec)
@@ -555,19 +609,65 @@ class PrecisionWaypointMission(LetterWaypointMission):
             raise PrecisionFailure('Behavior acceptance unconfirmed')
         handle = self._send_future.result()
         self._send_future = None
-        if handle is None or not handle.accepted:
-            raise PrecisionFailure('Nav2 rejected precision movement')
+        if handle is None:
+            raise PrecisionFailure('No precision goal handle; acceptance unconfirmed')
+        if not handle.accepted:
+            raise PrecisionMovementFailure('Nav2 rejected precision movement')
         self._goal_handle = handle
         self._result_future = handle.get_result_async()
         if not self._wait(self._result_future, timeout=12.0):
             raise PrecisionFailure('Approach interrupted' if self.stop_requested
                                        else 'Behavior result timed out')
         result = self._result_future.result()
+        if result is None or result.status not in (
+                GoalStatus.STATUS_SUCCEEDED, GoalStatus.STATUS_ABORTED,
+                GoalStatus.STATUS_CANCELED):
+            # Retain handles so cleanup can resolve/cancel an uncertain action.
+            raise PrecisionFailure('Precision movement termination unconfirmed')
         self._goal_handle = self._result_future = None
-        if (result is None or result.status != GoalStatus.STATUS_SUCCEEDED or
-                int(getattr(result.result, 'error_code', 0)) != 0):
-            reason = getattr(getattr(result, 'result', None), 'error_msg', '')
-            raise PrecisionFailure('Precision movement failed: ' + reason)
+        if self.stop_requested or result.status == GoalStatus.STATUS_CANCELED:
+            raise PrecisionFailure('Precision movement interrupted or canceled')
+        code = int(getattr(result.result, 'error_code', 0))
+        if result.status != GoalStatus.STATUS_SUCCEEDED or code != 0:
+            behavior = 'Spin' if client is self._spin else 'DriveOnHeading'
+            reason = getattr(result.result, 'error_msg', '') or 'no error message supplied'
+            raise PrecisionMovementFailure(
+                f'{behavior} failed: status={result.status}, '
+                f'error_code={code}, reason={reason}')
+
+    def _confirm_arrival(self, target):
+        """Require five fresh, stable AMCL estimates while stopped."""
+        self._settle(seconds=1.0)
+        samples = []
+
+        for index in range(5):
+            self._settle(seconds=0.25)
+            distance, _ = self._fresh_pose(target)
+
+            if distance > self.position_tolerance:
+                self.get_logger().info(
+                    f'Arrival not confirmed: error={distance:.3f} m; '
+                    'continuing correction')
+                return False
+
+            position = self._pose.pose.pose.position
+            sample = (position.x, position.y)
+            if any(math.hypot(sample[0] - x, sample[1] - y) > 0.01
+                   for x, y in samples):
+                self.get_logger().info(
+                    'Arrival not confirmed: AMCL position shifted '
+                    'by more than 1 cm')
+                return False
+
+            samples.append(sample)
+            self.get_logger().info(
+                f'ARRIVAL CHECK {index + 1}/5: '
+                f'estimated error={distance:.3f} m')
+
+        self.get_logger().info(
+            'PRECISION ARRIVAL: five stable AMCL updates; '
+            f'final estimated error={distance:.3f} m')
+        return True
 
     def _correct_position(self, target):
         self._settle()  # Let the smoother/base finish stopping after cancellation.
@@ -579,19 +679,14 @@ class PrecisionWaypointMission(LetterWaypointMission):
         until = time.monotonic() + self.approach_timeout
         for attempt in range(self.max_corrections):
             if time.monotonic() >= until:
-                raise PrecisionFailure('Precision approach time limit reached')
+                raise PrecisionMovementFailure('Precision approach time limit reached')
             distance, heading = self._fresh_pose(target)
             self.get_logger().info(
                 f'PRECISION: error={distance:.3f} m, bearing={heading:.3f} rad')
             if distance > 0.25:
-                raise PrecisionFailure('Target moved outside precision approach region')
+                raise PrecisionMovementFailure('Target moved outside precision approach region')
             if distance <= self.position_tolerance:
-                # Require a second independent scan update while stopped.
-                self._settle(0.3)
-                check, _ = self._fresh_pose(target)
-                if check <= self.position_tolerance:
-                    self.get_logger().info(
-                        f'PRECISION ARRIVAL: estimated error {check:.3f} m')
+                if self._confirm_arrival(target):
                     return
                 continue
             if distance < best_rotation_distance - 0.003:
@@ -601,7 +696,7 @@ class PrecisionWaypointMission(LetterWaypointMission):
                 if previous_heading is not None and heading * previous_heading < 0:
                     reversals_without_progress += 1
                 if reversals_without_progress >= 3:
-                    raise PrecisionFailure(
+                    raise PrecisionMovementFailure(
                         'Repeated alignment reversals without position progress; '
                         'check Spin braking and AMCL pose stability')
                 previous_heading = heading
@@ -618,7 +713,7 @@ class PrecisionWaypointMission(LetterWaypointMission):
                 else:
                     non_improving_drives += 1
                 if non_improving_drives >= 5:
-                    raise PrecisionFailure('No map-position progress after repeated steps')
+                    raise PrecisionMovementFailure('No map-position progress after repeated steps')
                 goal = DriveOnHeading.Goal()
                 # Wheel distance only limits this short step; AMCL decides arrival.
                 goal.target.x = min(self.step_distance, max(
@@ -627,7 +722,7 @@ class PrecisionWaypointMission(LetterWaypointMission):
                 goal.time_allowance.sec = 5
                 self._behavior(self._drive, goal)
             self._settle()
-        raise PrecisionFailure('Precision approach correction limit reached')
+        raise PrecisionMovementFailure('Precision approach correction limit reached')
 
     def _finish_navigation(self, index):
         target = landmark_coordinates(self._labels[index], self._map_profile)
@@ -657,6 +752,27 @@ class PrecisionWaypointMission(LetterWaypointMission):
             self._correct_position(target)
             return SimpleNamespace(status=GoalStatus.STATUS_SUCCEEDED,
                                    result=NavigateToPose.Result())
+        except PrecisionMovementFailure as error:
+            if self.stop_requested or not rclpy.ok():
+                return None
+            # Never advance while an action may still be running.
+            if ((self._goal_handle is not None or self._send_future is not None)
+                    and not self.cancel_active_goal()):
+                self.get_logger().error(
+                    'Cannot skip: precision action termination is unconfirmed')
+                return None
+            try:
+                self._settle()
+            except PrecisionFailure as settle_error:
+                self.get_logger().error(
+                    f'Cannot skip until the robot stops: {settle_error}')
+                return None
+            if self.stop_requested or not rclpy.ok():
+                return None
+            # Feed the existing missed-waypoint/skip-delay handling in run().
+            return SimpleNamespace(
+                status=GoalStatus.STATUS_ABORTED,
+                result=SimpleNamespace(error_code=0, error_msg=str(error)))
         except PrecisionFailure as error:
             self.get_logger().error(str(error) + '; stopping this mission')
             # Main's finally block resolves/cancels any pending behavior action.
