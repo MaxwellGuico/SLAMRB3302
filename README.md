@@ -7,7 +7,8 @@ RB3302 final project: a Waverover robot that drives to four letter points
 rb3302/
 ├── 1_Project_Logs/   daily project logs (Project Log - YYYY-MM-DD.md)
 ├── 2_Simulation/     Gazebo simulation (only src folders + README are in git)
-└── 3_IRL/            code that runs on the physical robot
+├── 3_IRL/            code that runs on the physical robot
+└── 4_Presentation_Slides/  final presentation (HTML deck + .pptx)
 ```
 
 ## Requirements
