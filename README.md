@@ -141,12 +141,27 @@ cd ~/rb3302_final_proj_code
 ./robot_init.sh   # Terminal 1: lidar, IMU, base driver, robot model
 ./rpp.sh          # Terminal 2: Nav2 with Regulated Pure Pursuit
 ./nav_rviz.sh     # Optional: RViz with the navigation layout
+./record_debug.sh 01   # Optional: record a debug bag for run 01 (Ctrl+C to stop)
 ./kill.sh         # Clean up leftover ROS processes after a crash
 ```
+
+After setting the pose in RViz with **2D Pose Estimate**, start the
+four-letter mission:
+
+```bash
+source ~/rb3302_final_proj_code/student_ws/install/setup.bash
+ros2 run planning_rpp letter_waypoint_precision.py A H Q X
+```
+
+Nav2 drives to within 10 cm of each cell. The script then makes small
+corrections until five AMCL readings agree that the robot is within 2 cm. If
+the robot cannot get there, it announces the cell as missed and moves on.
 
 Mapping with Cartographer, saving maps, A* planning and the letter-waypoint
 mission scripts are covered in
 [`3_IRL/rb3302_final_proj_code/student_ws/README.md`](3_IRL/rb3302_final_proj_code/student_ws/README.md).
 
-Recorded debug runs (`*_debug*/`, `.mcap` bags) and `run_logs/` are kept in
-`3_IRL/rb3302_final_proj_code/` for reference.
+Recorded debug runs (`.mcap` bags) are kept in
+`3_IRL/rb3302_final_proj_code/rosbags/` and run logs in `run_logs/`, both for
+reference. New recordings from `record_debug.sh` are saved to `rosbags/` as
+`<run>-DD-MM-YY`.
