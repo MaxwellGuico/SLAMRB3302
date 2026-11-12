@@ -122,8 +122,9 @@ def generate_launch_description():
                 'odom0_pose_rejection_threshold': 5.0,
                 'odom0_twist_rejection_threshold': 5.0,
                 'imu0': imu_topic,
-                # Wave Rover built-in IMU (republished by waverover_driver on
-                # /waverover/imu): absolute yaw only. It has no gyro rate.
+                # Yesense IMU on /imu_data_ros (default imu_topic): absolute
+                # yaw and yaw rate. The Wave Rover built-in IMU
+                # (/waverover/imu) is less accurate and is not used here.
                 'imu0_config': [
                     False, False, False,
                     False, False, True,
