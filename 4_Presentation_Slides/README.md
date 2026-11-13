@@ -39,4 +39,4 @@ a slide, edit `index.html`, then export the slides again.
 ## AI use
 
 The cleaned map on slide 5 was made with ChatGPT from the Cartographer output.
-The slide says so.
+The size, the 5 cm resolution and the origin are the same as the Cartographer map.
