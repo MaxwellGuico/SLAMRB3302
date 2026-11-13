@@ -3,9 +3,9 @@
 Slides for the 5-minute presentation (+5 minutes Q&A).
 
 ```text
-index.html                 the deck: 14 animated slides in one HTML file
+index.html                 the deck: 15 animated slides in one HTML file
 RB3302_Presentation.pptx   image-only copy for submission (one picture per slide)
-assets/                    source images of the map (raw and cleaned)
+assets/                    source images: map (raw and cleaned), costmap photos
 ```
 
 `index.html` is self-contained. The fonts and map images are embedded, so it
